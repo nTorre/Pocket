@@ -1,0 +1,188 @@
+body {
+    font-family: "Helvetica Neue Light", "Helvetica Neue";
+    padding: 0px;
+    margin: 0px;
+    background: #DBE4EB;
+    width: 100%;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #293042;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 0px;
+}
+
+.header {
+    margin: 0;
+    height: 60px;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 1px 2px 10px rgb(201, 201, 201);
+}
+
+.menu_icon {
+    padding: 5px 10px 5px 10px;
+    font-size: 35px;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    font-weight: 100;
+    color: #646464;
+}
+
+.is-open_menu {
+    width: 250px;
+}
+
+.is-open_main {
+    margin-left: 250px;
+}
+
+.text_intestation {
+    font-size: 13px;
+    font-weight: 400;
+    color: #e9ecef;
+    width: 200px;
+    display: inline;
+    position: absolute;
+    margin: 7px 0 0 15px;
+    padding: 0px;
+}
+
+.image_intestation {
+    filter: brightness(0.8);
+}
+
+.menu_intestation {
+    height: 30px;
+    margin-left: 23px;
+    cursor: pointer;
+    margin-right: 20px;
+    padding: 7px 0 7px 3px;
+}
+
+.menu_intestation:hover .text_intestation {
+    color: #ffffff;
+}
+
+.menu_intestation:hover .image_intestation {
+    filter: brightness(0.9);
+}
+
+.menu_logo {
+    color: #ffffff;
+    font-size: 30px;
+    width: 250px;
+    text-align: center;
+}
+
+.group_sub_item {
+    margin-left: 40px;
+    margin-right: 10px;
+    padding: 0;
+    height: 0px;
+    overflow: hidden;
+}
+
+.sub_item {
+    padding: 8px 0 8px 0;
+    color: #d4d4d4;
+    margin: 0 0 5px 0;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.sub_item:hover {
+    color: #ffffff;
+}
+
+.is-open_finances {
+    height: 160px;
+    overflow: hidden;
+}
+
+.is-open_plans {
+    height: 130px;
+    overflow: hidden;
+}
+
+.animation {
+    transition: all 0.3s ease-out;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+.svg_selcted {
+    /*filter: brightness(0.9);*/
+    transform: translateY(25%);
+    top: 50%;
+    height: 18px;
+}
+
+.menu_intestation_selected {
+    font-size: 13px;
+    font-weight: 400;
+    color: #e9ecef;
+    width: 200px;
+    display: inline;
+    position: absolute;
+    margin: 7px 0 0 15px;
+    padding: 0px;
+}
+
+.main_container {
+    margin: 15px;
+}
+
+@media(max-width: 767px) {
+    .is-open_main {
+        margin-left: 0px;
+    }
+}
