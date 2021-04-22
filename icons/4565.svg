@@ -18,8 +18,7 @@
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
      id="defs6" /><sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
+     stroke="none"
      borderopacity="1"
      objecttolerance="10"
      gridtolerance="10"
@@ -36,7 +35,7 @@
        id="g12"
        transform="scale(0.1)"><path
          d="M 0,0 H 35000 V 20000 H 0 Z"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         style="fill:#ffffff;fill-opacity:0;fill-rule:nonzero;stroke:none"
          id="path14" /><path
          d="m 6702.25,17152.1 c 4154.75,1542.4 8377.45,178.8 11241.35,-2791.3 1432.4,-1485.5 3651.9,-972.2 5911.7,-459 2258.4,513 4557,1025.9 6150.3,-456.2 C 32181,11422 31184.6,6219.2 28201.7,3965.8 24147.4,902.801 11817.5,2457 9150.37,2978.2 c -3072.77,600.6 -5319.2,2422.6 -6231.92,4634 -2199.204,5328.4 1947.74,8858.3 3783.8,9539.9"
          style="fill:#e7f3fe;fill-opacity:1;fill-rule:nonzero;stroke:none"
