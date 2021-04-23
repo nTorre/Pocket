@@ -86,3 +86,47 @@ input {
     color: #000000;
     font-weight: 500;
 }
+
+@media(max-width: 767px) {
+    .img_signup {
+        display: none;
+    }
+    .container {
+        text-align: center;
+        height: 100%;
+        border: none;
+        margin: 20px 0 0 0;
+        padding: 0;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        background: transparent;
+    }
+    .container_box {
+        margin: 0 auto;
+        display: table;
+    }
+    .header_button-in {
+        width: 320px;
+    }
+    .title {
+        display: block;
+        width: 300px;
+        text-align: center;
+    }
+    .check {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: inline-block;
+        width: auto;
+        margin-left: -50px;
+    }
+    .terms {
+        display: inline;
+        margin-left: 10px;
+        font-size: 15px;
+    }
+}

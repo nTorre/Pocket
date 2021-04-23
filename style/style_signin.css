@@ -10,9 +10,9 @@ body {
 }
 
 .img_signup {
-    height: 170px;
+    height: 220px;
     background: transparent;
-    margin-top: 150px;
+    margin-top: 130px;
     display: inline;
     float: right;
 }
@@ -38,8 +38,8 @@ body {
 
 .container_box {
     height: 300px;
-    width: 400px;
-    margin-top: 30px;
+    width: 300px;
+    margin: 120px 10px 10px 50px;
     display: inline;
     float: left;
 }
@@ -54,7 +54,7 @@ input {
     margin-top: 20px;
     padding: 10px;
     display: block;
-    width: 300px;
+    width: 280px;
 }
 
 .header_button-in {
@@ -69,20 +69,37 @@ input {
     display: block;
     width: 100px;
     margin-right: 75px;
-    margin-top: 0px;
+    margin-top: 30px;
 }
 
-.terms {
-    display: inline-block;
-}
-
-.check {
-    margin-top: 0px;
-    display: inline-block;
-    width: 20px;
-}
-
-.terms a {
-    color: #000000;
-    font-weight: 500;
+@media(max-width: 767px) {
+    .img_signup {
+        display: none;
+    }
+    .container {
+        text-align: center;
+        height: 100%;
+        border: none;
+        margin: 20px 0 0 0;
+        padding: 0;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        background: transparent;
+    }
+    .container_box {
+        margin: 0 auto;
+        display: table;
+    }
+    .header_button-in {
+        width: 300px;
+    }
+    .title {
+        display: block;
+        width: 300px;
+        text-align: center;
+    }
 }
