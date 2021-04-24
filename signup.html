@@ -20,16 +20,17 @@
 
                 <p class="title">Sign up</p>
 
-                <input name="name" type="text" placeholder="Name">
+                <input id="name" name="name" type="text" placeholder="Name">
                 <input name="email" type="email" placeholder="E-mail">
                 <input name="re-email" type="email" placeholder="Repeat E-mail">
-                <input name="password" type="password" placeholder="Password">
-                <input name="re-password" type="password" placeholder="Repeat password">
+                <input oninput="checkPass()" id="password" name="password" type="password" placeholder="Password">
+                <input oninput="checkPass()" id="re-password" name="re-password" type="password" placeholder="Repeat password">
 
                 <input name="check" class="check" type="checkbox">
                 <p class="terms">I've read all statements from <a href="">Terms of service</a></p>
 
-                <input class="header_button-in" value="Sign Up">
+                <button type="submit" id="submit" class="header_button-in">Sign Up</button>
+
 
             </form>
         </div>
@@ -37,5 +38,41 @@
 
 
 </body>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+
+<script>
+    function checkPass() {
+        let pass = document.getElementById("password").value;
+        let re_pass = document.getElementById("re-password").value;
+
+        if (pass != "" && re_pass != "")
+            if (pass != re_pass) {
+                document.getElementById("re-password").classList.add("error");
+                $("#submit").css({
+                    "pointer-events": "none",
+                    "background": "#6494ed7a"
+                });
+
+            } else {
+                document.getElementById("re-password").classList.remove("error");
+                $("#submit").css({
+                    "pointer-events": "auto",
+                    "background": "#6495ED"
+                });
+            }
+
+        else {
+            document.getElementById("re-password").classList.remove("error");
+            $("#submit").css({
+                "pointer-events": "auto",
+                "background": "#6495ED"
+            });
+
+        }
+    }
+</script>
 
 </html>
