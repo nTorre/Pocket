@@ -8,7 +8,7 @@ body {
     font-family: Poppins, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif;
 }
 
-.sidebar {
+.msidebar {
     min-height: 100vh;
     padding: 0;
     margin: 0;
@@ -21,7 +21,7 @@ body {
     position: absolute
 }
 
-.sidebar-brand {
+.msidebar-brand {
     font-weight: 500;
     font-size: 1.125rem;
     padding: 1.15rem 1.5rem;
@@ -32,7 +32,7 @@ body {
     text-align: center;
 }
 
-.svgprova {
+.msvgprova {
     fill: #4a88eb;
     height: 24px;
     width: 24px;
@@ -41,29 +41,29 @@ body {
     margin-bottom: -.35rem;
 }
 
-.align-middle {
+.malign-middle {
     vertical-align: middle!important
 }
 
-.sidebar-header {
+.msidebar-header {
     background: transparent;
     padding: 1.5rem 1.5rem .375rem;
     font-size: .75rem;
     color: #ced4da;
 }
 
-.sidebar-nav {
+.msidebar-nav {
     padding-left: 0;
     list-style: none
 }
 
-.sidebar-brand {
+.msidebar-brand {
     transition: 0.3s;
     white-space: nowrap;
 }
 
-.sidebar-link,
-a.sidebar-link {
+.msidebar-link,
+a.msidebar-link {
     display: block;
     padding: .625rem 1.625rem;
     font-weight: 400;
@@ -75,17 +75,17 @@ a.sidebar-link {
     color: rgba(233, 236, 239, .5)
 }
 
-.sidebar-item {
+.msidebar-item {
     list-style-type: none;
     margin-left: -5px;
     min-width: 200px;
 }
 
-.sidebar-item:hover>a {
+.msidebar-item:hover>a {
     color: rgba(233, 236, 239, .75)
 }
 
-.sidebar-item_icon {
+.msidebar-item_icon {
     height: 20px;
     width: 20px;
     margin-right: .67rem;
@@ -93,56 +93,56 @@ a.sidebar-link {
     margin-bottom: -.35rem;
 }
 
-.scroll_wrapper {
+.mscroll_wrapper {
     min-height: 100vh;
     background: #293042;
     height: 100%;
     overflow: hidden;
 }
 
-.extended_arrow {
+.mextended_arrow {
     float: right;
     margin-top: 5px;
     height: 16px;
     width: 16px;
 }
 
-.collapsed {
+.mcollapsed {
     height: 0px;
     overflow: hidden;
 }
 
-.child {
+.mchild {
     -webkit-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
 }
 
-.open_org {
+.mopen_org {
     overflow: visible;
     height: 160px;
 }
 
-.open_fin {
+.mopen_fin {
     overflow: visible;
     height: 120px;
 }
 
-.open_files {
+.mopen_files {
     overflow: visible;
     height: 80px;
 }
 
-.rotate {
+.mrotate {
     transition: 0.3s ease-in-out;
     transform: rotate(180deg);
 }
 
-.re-rotate {
+.mre-rotate {
     transition: 0.3s ease-in-out;
     transform: rotate(180deg);
 }
 
-.active {
+.mactive {
     display: block;
     padding: 0.1rem 1.625rem;
     font-weight: 400;
@@ -154,12 +154,12 @@ a.sidebar-link {
     color: rgba(255, 255, 255, 0.9)
 }
 
-.main_container {
+.mmain_container {
     background: #f5f5f5;
     transition: 0.3s ease-in-out;
 }
 
-.intestation {
+.mintestation {
     height: 40px;
     width: 100%;
     background: #ffffff;
@@ -167,14 +167,14 @@ a.sidebar-link {
     box-shadow: 0 0 2rem 0 rgb(41 48 66 / 10%)
 }
 
-#menu_button {
+#mmenu_button {
     cursor: pointer;
     display: inline-block;
     margin-top: 10px;
     margin-left: 18px;
 }
 
-.first_line {
+.mfirst_line {
     border-radius: 1px;
     height: 3px;
     width: 20px;
@@ -184,7 +184,7 @@ a.sidebar-link {
     margin-bottom: 5px;
 }
 
-.second_line {
+.msecond_line {
     cursor: pointer;
     border-radius: 1px;
     height: 3px;
@@ -195,7 +195,7 @@ a.sidebar-link {
     margin-bottom: 5px;
 }
 
-.third_line {
+.mthird_line {
     cursor: pointer;
     border-radius: 1px;
     height: 3px;
@@ -205,21 +205,21 @@ a.sidebar-link {
     content: "";
 }
 
-.container {
+.mcontainer {
     background: #495057;
     margin: 15px;
 }
 
-.is-open_menu {
+.mis-open_menu {
     width: 260px;
 }
 
-.is-open_main {
+.mis-open_main {
     margin-left: 260px;
 }
 
 @media(max-width: 767px) {
-    .is-open_main {
+    .mis-open_main {
         margin-left: 0px;
     }
 }
