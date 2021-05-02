@@ -3,6 +3,59 @@
     height: 100%;
 }
 
+.add-event_container {
+    height: 30px;
+    width: 100%;
+    background: transparent;
+    margin-bottom: 30px;
+}
+
+.rel_btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #6c757d;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .0rem .4rem;
+    font-size: .825rem;
+    line-height: 1.625;
+    border-radius: .2rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    color: #fff;
+    background-color: #3f80ea;
+    border-color: #3f80ea
+}
+
+.dash_title {
+    display: inline;
+}
+
+.reload_icon {
+    margin-top: 5px;
+}
+
+#reload {
+    float: right;
+    text-decoration: none;
+    transition: 0.3;
+}
+
+#reload:hover {
+    color: #fff;
+    background: #0072f4;
+}
+
+.mmain_container {
+    height: 100%;
+    background: #ffffff;
+    transition: 0.3s ease-in-out;
+}
+
 @media(max-width: 767px) {
     .mis-open_main {
         margin-left: 260px;
