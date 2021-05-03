@@ -84,3 +84,9 @@ body {
     min-width: 100%;
     min-height: 36px;
 }
+
+@media (max-width: 767px) {
+    .half_container {
+        width: 100%;
+    }
+}
