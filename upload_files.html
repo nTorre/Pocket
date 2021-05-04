@@ -7,48 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style/style_menu2.css">
-    <link rel="stylesheet" href="style/style_dashboard.css">
+    <link rel="stylesheet" href="style/style_new_event.css">
 
 
 
-    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 
 
-    <link href='calendar/main.css' rel='stylesheet' />
-    <script src='calendar/main.js'></script>
 
-    <link href='style/style_cal.css' rel='stylesheet' />
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',
-                themeSystem: 'bootstrap',
-                height: 400,
-                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: ''
-                }
-
-            });
-
-            setTimeout(function() {
-                calendar.render();
-            }, 250)
-
-            $("#mmenu_button").click(function(e) {
-                setTimeout(function() {
-                    calendar.render();
-                }, 250)
-                e.preventDefault();
-            });
-        });
-    </script>
 
 </head>
 
@@ -76,7 +44,7 @@
                     Profile
                 </li>
                 <li class="msidebar-item">
-                    <a href="#dashboard" data-toggle="collapse" class="mactive">
+                    <a href="dashboard.html" data-toggle="collapse" class="mactive">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
                         <span class="malign-middle">Dashboard</span>
 
@@ -157,38 +125,36 @@
 
         <div id="container" class="mcontainer">
 
-            <div class="reload_container">
-                <h3 class="dash_title">Dashboard</h3>
+            <h3 class="title">New event</h3>
 
-                <button id="reload" class="rel_btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reload_icon"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-                </button>
-
-            </div>
-
-
-            <div class="rapid_container">
-                <div class="double_container">
-                    <div class="finanza">
-
-                    </div>
-                    <div>
-
-                    </div>
-
-                </div>
-                <div class="calendar_container">
-                    <a href="calendar.html">
-                        <h4>Calendar</h4>
-                    </a>
-                    <div id="calendar"></div>
+            <form action="upload.php" method="post" enctype="multipart/form-data" class="input_container">
+                <div class="full_container">
+                    <p class="input_title">Titolo</p>
+                    <input class="input" placeholder="Titolo">
                 </div>
 
-            </div>
-            <!--<h2>Sidenav Push Example</h2>
+
+                <div class="full_container">
+
+
+                    <p class="input_title">Seleziona file</p>
+                    <input class="input files" type="file" placeholder="Titolo">
+                </div>
+
+                <div class="full_container">
+                    <p class="input_title">Descrizione</p>
+                    <textarea class="input textarea" id="descrizione" placeholder="Descrizione" rows="5"></textarea>
+                </div>
+
+                <button class="btn_send">Invia</button>
+            </form>
+
+
+        </div>
+        <!--<h2>Sidenav Push Example</h2>
             <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
             -->
-        </div>
+    </div>
     </div>
 
 
