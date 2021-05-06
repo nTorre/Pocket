@@ -8,16 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="style/style_menu2.css">
     <link rel="stylesheet" href="style/style_new_event.css">
-
-
-
-
-
-
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
-
 </head>
 
 <body>
@@ -127,10 +118,10 @@
 
             <h3 class="title">New event</h3>
 
-            <form class="input_container">
+            <form class="input_container" action="event_receiver.php" method="POST">
                 <div class="full_container">
                     <p class="input_title">Titolo</p>
-                    <input class="input" placeholder="Titolo">
+                    <input name="titolo" class="input" placeholder="Titolo">
                 </div>
 
 
@@ -138,22 +129,22 @@
 
                     <div class="half_container left">
                         <p class="input_title">Da:</p>
-                        <input class="input" type="datetime-local" placeholder="Titolo">
+                        <input class="input" type="datetime-local" name="data_ini">
                     </div>
 
                     <div class="half_container right">
                         <p class="input_title">A:</p>
-                        <input class="input" type="datetime-local" placeholder="Titolo">
+                        <input class="input" type="datetime-local" name="data_fin">
                     </div>
 
                 </div>
 
                 <div class="full_container">
                     <p class="input_title">Descrizione</p>
-                    <textarea class="input textarea" id="descrizione" placeholder="Descrizione" rows="5"></textarea>
+                    <textarea class="input textarea" name="descrizione" id="descrizione" placeholder="Descrizione" rows="5"></textarea>
                 </div>
 
-                <button class="btn_send">Invia</button>
+                <button type="submit" class="btn_send">Invia</button>
             </form>
 
 
