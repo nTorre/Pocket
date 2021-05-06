@@ -116,6 +116,11 @@ a.msidebar-link {
     width: 16px;
 }
 
+.mcontracted {
+    transition: 0.3s ease-in-out;
+    transform: rotate(180deg);
+}
+
 .mcollapsed {
     height: 0px;
     overflow: hidden;
@@ -161,6 +166,30 @@ a.msidebar-link {
     text-decoration: none;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.9)
+}
+
+.mlinkactive {
+    display: block;
+    padding: .625rem 1.625rem;
+    font-weight: 400;
+    font-size: 14px;
+    transition: color 75ms ease-in-out;
+    position: relative;
+    text-decoration: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.9)
+}
+
+.mnonactive {
+    display: block;
+    padding: 0.1rem 1.625rem;
+    font-weight: 400;
+    font-size: 14px;
+    transition: color 75ms ease-in-out;
+    position: relative;
+    text-decoration: none;
+    cursor: pointer;
+    color: rgba(233, 236, 239, .5)
 }
 
 .mmain_container {
@@ -232,6 +261,8 @@ a.msidebar-link {
 
 @media(max-width: 767px) {
     .mis-open_main {
-        margin-left: 0px;
+        margin-left: 260px;
+        width: 100%;
+        position: fixed;
     }
 }

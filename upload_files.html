@@ -44,7 +44,7 @@
                     Profile
                 </li>
                 <li class="msidebar-item">
-                    <a href="dashboard.html" data-toggle="collapse" class="mactive">
+                    <a href="dashboard.html" data-toggle="collapse" class="mnonactive">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
                         <span class="malign-middle">Dashboard</span>
 
@@ -58,9 +58,9 @@
                     </a>
                     <ul id="org_child" class="mchild mcollapsed">
                         <li class="msidebar-item"><a class="msidebar-link" href="calendar.html">Calendario</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-analytics.html">Promemoria</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-saas.html">Viaggi</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-social.html">Eventi</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="new_event.html">Aggiungi evento</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="promemoria.html">Promemoria</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.html">Viaggi</a></li>
                     </ul>
                 </li>
 
@@ -71,9 +71,9 @@
 
                     </a>
                     <ul id="finanze_child" class="mchild mcollapsed">
+                        <li class="msidebar-item"><a class="msidebar-link" href="crypto.html">Crypto</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="dashboard-default.html">Conto</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="dashboard-analytics.html">Carte</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-saas.html">Crypto</a></li>
                     </ul>
                 </li>
 
@@ -92,9 +92,9 @@
                         <svg id="files_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
-                    <ul id="files_child" class="mchild mcollapsed" data-parent="#sidebar">
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-default.html">My Files</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="upload_files.html">Upload</a></li>
+                    <ul id="files_child" class="mchild mopen_files" data-parent="#sidebar">
+                        <li class="msidebar-item"><a class="msidebar-link" href="show_files.html">My Files</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="upload_files.html">Upload</a></li>
 
                     </ul>
                 </li>
@@ -106,13 +106,9 @@
 
                 </li>
 
-
-
             </ul>
         </div>
     </nav>
-
-
     <div id="root" class="mmain_container mis-open_main">
 
         <header class="mintestation">
@@ -263,6 +259,7 @@
                     });
 
                     $("#files_child").removeClass('mopen_files');
+                    $("#files_child").addClass('mcollapsed');
                 }
 
 
@@ -272,6 +269,8 @@
 
             $("#files").click(function(e) {
                 $("#files_child").toggleClass('mopen_files');
+                $("#files_child").toggleClass('mcollapsed');
+
                 if ($("#files_child").hasClass('mopen_files')) {
                     $("#files_arrow").css({
                         "transition": "0.3s ease-in-out",
