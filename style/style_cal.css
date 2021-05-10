@@ -80,3 +80,7 @@ a {
 a:hover {
     color: #000000;
 }
+
+.fc-timegrid-slot-minor {
+    border-top-style: solid
+}

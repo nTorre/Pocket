@@ -6,16 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style/style_menu2.css">
-    <link rel="stylesheet" href="style/style_show_files.css">
-
-
-
-
 
 
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/style_menu2.css">
+    <link rel="stylesheet" href="style/style_crypto2.css">
+
+
+
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">
+
+
+
+    <!--<link href="style/style_cal.css" rel="stylesheet">-->
+
 
 
 </head>
@@ -46,17 +51,18 @@
                 <li class="msidebar-item">
                     <a href="dashboard.html" data-toggle="collapse" class="mnonactive">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-                        <span class="malign-middle">Dashboard</span>
+                        <span class="">Dashboard</span>
 
                 </li>
 
                 <li class="msidebar-item">
                     <a id="organizzazione" data-toggle="collapse" class="msidebar-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Organizzazione</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <span class="">Organizzazione</span>
                         <svg id="org_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
-                    <ul id="org_child" class="mchild mcollapsed">
+                    <ul id="org_child" class="mcollapsed mchild">
                         <li class="msidebar-item"><a class="msidebar-link" href="calendar.html">Calendario</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="new_event.html">Aggiungi evento</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="promemoria.html">Promemoria</a></li>
@@ -65,13 +71,13 @@
                 </li>
 
                 <li class="msidebar-item">
-                    <a id="finanze" data-toggle="" class="msidebar-link">
+                    <a id="finanze" data-toggle="" class="mlinkactive">
                         <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>                        Finanza
-                        <svg id="finanze_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down align-middle mr-2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        <svg id="finanze_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow mcontracted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down align-middle mr-2"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
-                    <ul id="finanze_child" class="mchild mcollapsed">
-                        <li class="msidebar-item"><a class="msidebar-link" href="crypto.html">Crypto</a></li>
+                    <ul id="finanze_child" class="mchild mopen_fin">
+                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="crypto.html">Crypto</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="dashboard-default.html">Conto</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="dashboard-analytics.html">Carte</a></li>
                     </ul>
@@ -92,8 +98,8 @@
                         <svg id="files_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
-                    <ul id="files_child" class="mchild mopen_files" data-parent="#sidebar">
-                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="show_files.html">My Files</a></li>
+                    <ul id="files_child" class="mchild mcollapsed" data-parent="#sidebar">
+                        <li class="msidebar-item"><a class="msidebar-link" href="show_files.html">My Files</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="upload_files.html">Upload</a></li>
 
                     </ul>
@@ -105,6 +111,8 @@
                     </a>
 
                 </li>
+
+
 
             </ul>
         </div>
@@ -121,117 +129,76 @@
             </a>
         </header>
 
+
+
+
         <div id="container" class="mcontainer">
 
-            <div class="row">
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
-                        </div>
-                    </a>
-                </div>
+            <h3>Pocketcoin</h3>
 
+            <div class="balance_container">
+                <p class="balance">Balance: <b>2130000 PKCT</b></p>
+                <p class="address">Address: 0x8ce260e61727171c434ac59d888161d937ad4c30</p>
 
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
-                        </div>
-                    </a>
-                </div>
+            </div>
 
+            <hr>
 
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
-                        </div>
-                    </a>
-                </div>
+            <div class="balance_container">
+                <p class="space">Space: 0.12 GB / 1 GB</p>
+                <progress id="file" value="0.12" max="1"> 32% </progress>
 
             </div>
 
 
-            <div class="row">
+            <hr>
 
-
-
+            <div class="container_plans">
                 <div class="card">
-                    <a href="" class="card_link">
+                    <div class="card_link">
                         <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
+                            <h3>Free Plan</h3>
+                            <p class="type">0 PKCT</p>
+                            <p class="description">Space: 1GB</p>
+                            <a class="download current">Current</a>
                         </div>
-                    </a>
-                </div>
-
-
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
-                        </div>
-                    </a>
+                    </div>
                 </div>
 
                 <div class="card">
-                    <a href="" class="card_link">
+                    <div class="card_link">
                         <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
+                            <h3>Free Plan</h3>
+                            <p class="type">1000 PKCT</p>
+                            <p class="description">Space: 5GB</p>
+                            <a href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0xf1fad91c3afb4da2417b7af5fdbaf552c6aa9636&inputCurrency=" target="_blank" class="download">Upgrade</a>
                         </div>
-                    </a>
+                    </div>
                 </div>
 
+                <div class="card">
+                    <div class="card_link">
+                        <div class="content">
+                            <h3>Free Plan</h3>
+                            <p class="type">10000 PKCT</p>
+                            <p class="description">Space: 60GB</p>
+                            <a href="" class="download">Upgrade</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card_link">
+                        <div class="content">
+                            <h3>Free Plan</h3>
+                            <p class="type">1000000 PKCT</p>
+                            <p class="description">Space: 800GB</p>
+                            <a href="" class="download">Upgrade</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
-        <!--<h2>Sidenav Push Example</h2>
-            <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
-            -->
-    </div>
     </div>
 
 
@@ -239,6 +206,8 @@
 
     <script>
         $(document).ready(function() {
+
+
 
             /*$(".menu_icon").click(function(e) {
                 $("#mySidenav").toggleClass('is-open_menu');
@@ -268,7 +237,9 @@
 
 
             $("#organizzazione").click(function(e) {
+                $("#org_child").toggleClass('mcollapsed');
                 $("#org_child").toggleClass('mopen_org');
+
                 if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
@@ -289,6 +260,7 @@
                     });
 
                     $("#finanze_child").removeClass('mopen_fin');
+                    $("#finanze_child").addClass('mcollapsed');
 
                 }
 
@@ -309,6 +281,8 @@
 
             $("#finanze").click(function(e) {
                 $("#finanze_child").toggleClass('mopen_fin');
+                $("#finanze_child").toggleClass('mcollapsed');
+
                 if ($("#finanze_child").hasClass('mopen_fin')) {
                     $("#finanze_arrow").css({
                         "transition": "0.3s ease-in-out",
@@ -330,6 +304,8 @@
                     });
 
                     $("#org_child").removeClass('mopen_org');
+                    $("#org_child").addClass('mcollapsed');
+
                 }
 
 
@@ -340,7 +316,6 @@
                     });
 
                     $("#files_child").removeClass('mopen_files');
-                    $("#files_child").addClass('mcollapsed');
                 }
 
 
@@ -348,10 +323,9 @@
                 e.preventDefault();
             });
 
+
             $("#files").click(function(e) {
                 $("#files_child").toggleClass('mopen_files');
-                $("#files_child").toggleClass('mcollapsed');
-
                 if ($("#files_child").hasClass('mopen_files')) {
                     $("#files_arrow").css({
                         "transition": "0.3s ease-in-out",
@@ -366,13 +340,15 @@
 
                 }
 
-                if ($("#org_child").removeClass('mopen_org')) {
+                if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
                         "transform": "rotate(0deg)"
                     });
 
                     $("#org_child").removeClass('mopen_org');
+                    $("#org_child").addClass('mcollapsed');
+
                 }
 
                 if ($("#finanze_child").hasClass('mopen_fin')) {
@@ -382,9 +358,9 @@
                     });
 
                     $("#finanze_child").removeClass('mopen_fin');
+                    $("#finanze_child").addClass('mcollapsed');
+
                 }
-
-
 
 
                 e.preventDefault();

@@ -1,0 +1,164 @@
+body {
+    background: #f3f3f3;
+}
+
+.mcontainer {
+    background: #f3f3f3;
+    margin: 0;
+    padding: 15px;
+}
+
+.mmain_container {
+    background: #f3f3f3;
+}
+
+.container_plans {
+    display: inline-block;
+}
+
+.card {
+    margin-top: 10px;
+    width: 24%;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;
+    /* Firefox, other Gecko */
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0 20px;
+    background: #f3f3f3;
+    transition: 0.3s;
+}
+
+.content {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 3px;
+    box-shadow: 0 0 0.875rem 0 rgb(41 48 66 / 5%);
+}
+
+.card_link {
+    text-decoration: none;
+}
+
+.type {
+    font-size: 19px;
+    color: rgb(51, 51, 51);
+    color: #000000;
+}
+
+h3 {
+    margin-top: 5px;
+    color: #000000;
+}
+
+.description {
+    display: inline-block;
+    width: 100%;
+    color: #7e7e7e;
+    text-overflow: ellipsis;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+}
+
+.description::-webkit-scrollbar {
+    display: none;
+}
+
+.mcontainer {
+    background: #f3f3f3;
+}
+
+.download {
+    text-decoration: none;
+    background: #0072f4;
+    height: 30px;
+    width: 100px;
+    display: inline-block;
+    padding: 8px 5px 6px 5px;
+    border-radius: 3px;
+    transition: 0.3s;
+    color: #ffffff;
+    text-align: center;
+}
+
+.container_plans {
+    margin-bottom: 30px;
+}
+
+.download:hover {
+    transform: scale(1.04, 1.04);
+}
+
+.svg_download {
+    stroke: #ffffff;
+}
+
+.current {
+    background: #8aa5c4a4;
+}
+
+.current:hover {
+    transform: none;
+    cursor: default;
+}
+
+.balance_container {
+    margin: 20px
+}
+
+.balance {
+    font-size: 25px;
+}
+
+.address {
+    font-size: 18px;
+    color: #7e7e7e;
+}
+
+.space {
+    font-size: 25px;
+    display: inline-block;
+}
+
+progress {
+    margin-left: 30px;
+    width: 300px;
+}
+
+@media (max-width: 998px) {
+    .card {
+        display: inline-block;
+        width: 100%;
+        padding: 0px;
+        padding-right: 10px;
+    }
+    .address,
+    .balance,
+    progress,
+    .space {
+        width: 100%;
+        text-align: center;
+        display: flexbox;
+    }
+    progress {
+        margin-left: 0px;
+    }
+    .address,
+    .balance {
+        white-space: pre-wrap;
+        /* CSS3 */
+        white-space: -moz-pre-wrap;
+        /* Firefox */
+        white-space: -pre-wrap;
+        /* Opera <7 */
+        white-space: -o-pre-wrap;
+        /* Opera 7 */
+        word-wrap: break-word;
+    }
+}

@@ -134,10 +134,21 @@
         <div id="container" class="mcontainer">
 
             <form>
-                <input class="input">
-                <button id="add-metamask" class="btn_send" type="submit">Connetti al wallet <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
+                <h2>Ho un indirizzo</h2>
+                <input placeholder="Indirizzo wallet" class="input">
+                <button class="btn_send" type="submit">Connetti al wallet <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></button>
             </form>
-            <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">Connetti </a>
+
+            <hr>
+            <h2>Non ho un indirizzo</h2>
+            <ul>
+                <li>
+                    <p>Aggiungi l'estenzione <a class="btn_metamask" href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">Metamask<img src="icons/metamask.svg"></a></p>
+                </li>
+                <li>
+                    <p>Crea un wallet e incolla l'indirizzo</p>
+                </li>
+            </ul>
 
         </div>
     </div>
@@ -149,7 +160,6 @@
         $(document).ready(function() {
 
 
-            chrome.webstore.install();
 
             /*$(".menu_icon").click(function(e) {
                 $("#mySidenav").toggleClass('is-open_menu');

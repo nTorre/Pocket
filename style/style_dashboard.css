@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    background: #f3f3f3;
+    background: #fafafa;
     margin: 0;
     font-family: Poppins, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, sans-serif;
 }
@@ -56,22 +56,117 @@ body {
     float: right;
 }
 
+.double_container {
+    width: 50%;
+    display: table-cell;
+}
+
 .calendar_container {
     width: 50%;
     background: #fff;
     padding: 10px;
     box-shadow: 0 0 0.875rem 0 rgb(41 48 66 / 5%);
     border-radius: 5px;
-    border: 1px solid red;
+    display: table-cell;
 }
 
 .rapid_container {
+    width: 100%;
     margin-top: 25px;
+    display: table;
+}
+
+.finanza {
+    height: 207px;
+    margin: 0px;
+    padding: 6.5px;
+    margin: 10px 5px 5px 10px;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 0 1rem 0 rgb(41 48 66 / 5%);
+}
+
+.calendar_margin {
+    margin: 0 10px 10px 10px;
+}
+
+.balance {
+    width: 50%;
+    float: left;
+    width: calc(50% - 10px);
+}
+
+.plan {
+    width: calc(50% - 10px);
+    float: right;
+    margin: 0px;
+}
+
+.files {
+    height: 207px;
+    margin: 0px;
+    padding: 6.5px;
+    margin: 10px 5px 5px 10px;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 0 1rem 0 rgb(41 48 66 / 5%);
+}
+
+.type {
+    font-size: 19px;
+    color: rgb(51, 51, 51);
+    color: #000000;
+}
+
+.description {
+    display: inline-block;
+    width: 100%;
+    color: #7e7e7e;
+    /* IE and Edge */
+}
+
+.download {
+    text-decoration: none;
+    background: #0072f4;
+    height: 30px;
+    width: 100px;
+    display: inline-block;
+    padding: 8px 5px 6px 5px;
+    border-radius: 3px;
+    transition: 0.3s;
+    color: #ffffff;
+    text-align: center;
+    margin: 10px 0 0 10px;
+}
+
+progress {
+    width: 80%;
 }
 
 @media(max-width: 998px) {
     .calendar_container {
         width: calc(100% - 30px);
         height: 100%;
+        display: block;
+        margin: 0;
+    }
+    .finanza {
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0px 0px 20px 0
+    }
+    .files {
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0px 0px 20px 0
+    }
+    .double_container {
+        display: block;
+        width: calc(100% - 10px);
+    }
+    .calendar_margin {
+        margin: 0px;
     }
 }
