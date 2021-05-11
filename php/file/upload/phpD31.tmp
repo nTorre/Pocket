@@ -1,0 +1,140 @@
+CREDENZIALI ACCOUNT 
+
+MAIL ACCESSO ARUBA
+13192427@aruba.it
+SebaTorre13
+primo capo di lavoro = IO
+
+HOST.IT
+sebatopi13@gmail.com
+Sebastiano13#
+
+MACCHNA VIRTUALE
+46.101.107.236
+sebat Sebastiano13#
+
+-------------------------------------------------------------------------------------------------
+
+Comandi linux base
+
+ls = vedo file		-l lungo	-lh human	
+touch nomefile = creo un file vuoto
+mkdir nomedir = creo cartella vuota
+pwd = dove sono
+cd = home
+mv partenza arrivo = sposta
+cp partenda arrivo = copia
+
+cd /var/www/html -> radice dell'apache (htdocs)
+
+-----------------------------------------------------------------------------
+
+
+
+ESERCIZIO WEB SERVICE -->SegretWEB-Service
+
+endpoint: url alla quale si devono collegarei programmi per richiedere il servizio
+
+// servizio PAROLONI
+// restituisce un certo numero di parolacce, da scalare dal
+// credito quotidiano associato ad un'applicazione registrata
+
+http://ruggito.programmologo.it/paroloni.php
+
+formato della richiesta:
+    richiesta di tipo GET con parametri specificati tramite query string
+    parmatri obbligatori:
+        application_key 
+        num_parole: numero di parole da restituire 1..10
+        
+formato della risposta: json
+{ "parolacce": ["parola_cattiva_1", "parola_cattiva_2", ...],
+  "credito": 998,
+  "ms": 33}
+  
+errori: 
+    {"errore":"richiesta non valida"} per esempio mancanco i parametri, o la richiesta non è di tipo GET
+    
+    {"errore": "credenziali non valide"}
+    
+    {"errore": "credtio finito"}
+
+----------------------------------------------------------------------------------------------
+
+MACCHINA VIRTUALE 
+
+
+PERMESSI ROOT/GROUP/OTHER
+
+$ sudo adduser viel
+$ sudo passwd viel
+$ sudo usermod -aG wheel viel [viel viene aggiunto al gruppo "wheel" che sono i super potenti]
+
+$ sudo dnf install nano
+$ sudo dnf install httpd 
+$ sudo systemctl start httpd
+$ sudo systemctl start --now httpd
+$ sudo systemctl status httpd
+$ sudo systemctl enable httpd h
+
+$ sudo dnf install firewalld
+$ sudo systemctl start firewalld 
+$ sudo systemctl enable firewalld 
+
+$ sudo firewall-cmd --permanent --list-all
+$ sudo firewall-cmd --permanent --add-service=http
+$ sudo firewall-cmd --reload 
+
+$ sudo chown -R torriglia:apache .
+
+
+$ sudo firewall-cmd --permanent --list-all
+$ sudo firewall-cmd --permanent --add-service=http
+$ sudo firewall-cmd --reload 
+
+cd  /var/www/html
+
+$ sudo chown -R torriglia:root /var/www/html
+
+$ sudo dnf install php php-json php-mysqlnd
+$ sudo systemctl restart httpd
+
+<?php
+echo "ciclo";q
+foreach (range(1,10) as $i) echo $i." ";
+
+$ sudo dnf install mariadb-server
+$ sudo systemctl start --now mariadb
+
+$sudo mysql 
+
+MariaDB [(none)]> create user 'paroloni_u'@'localhost' identified by 'fai32';
+
+[sebat@bat16 html]$ mysql -u paroloni_u -p
+
+
+MariaDB [(none)]> grant all privileges on paroloni_db.* to 'paroloni_u'@'localhost';
+
+
+
+--------------------------------------------------------------------------------------------
+ENTRO IN MARIA mysql -u root -p
+CREO DATABASE --> CREATE DATABASE paroloni_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREO UTENTE   --> CREATE USER 'paroloni'@'localhost' IDENTIFIED BY 'zi_m#shBop98ztU';
+//utente non ha privilegi
+PRIVILEGI     --> GRANT ALL PRIVILEGES ON paroloni_db.* TO 'paroloni'@'localhost'
+
+//ENTRO CON NUOVO UTENTE
+mysql -u paroloni -p
+
+//CREO TABELLA
+create table logs(log_id int auto_increment primary key, quando datetime default current_timestamp);
+
+----------------------------------------------------------------------------------------------
+CARICO FILE SUL SERVER
+
+- CAMBIO PERMESSI AD HTML NEL SERVER REMOTO
+
+- MI COLLEGO CON SFTP DAL MIO COMPUTER LOCALE AL SERVER REMOTO sftp zak@142.93.108.157
+
+- put nomefile.php

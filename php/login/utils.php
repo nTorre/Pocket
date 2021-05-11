@@ -1,13 +1,13 @@
 <?php  
 require_once '../utils/database.php';
 
-function check_login($email, $pass){
+function check_login_web($email, $pass){
 	global $pdo;
 
 	//prendo il record
 	$sql='
 	select 
-		MAIL, 
+		U_ID, 
 		PASS_HASH
 	from USERS
 	where MAIL like ?
@@ -27,6 +27,17 @@ function check_login($email, $pass){
 	if(password_verify($pass, $user['PASS_HASH'])){
 		return $user;
 	}
-
 	return false;
+}
+
+
+function generate_token(){
+	$token = trim(strtr(base64_encode(random_bytes(30)), '/+', '_-'));
+	header("Authorization: $token");
+	return $token;
+}
+
+function insert_token(){
+
+
 }
