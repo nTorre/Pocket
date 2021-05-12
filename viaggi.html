@@ -7,48 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style/style_menu2.css">
-    <link rel="stylesheet" href="style/style_dashboard.css">
-
-
-
-    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
-
-
-    <link href='calendar/main.css' rel='stylesheet' />
-    <script src='calendar/main.js'></script>
-
-    <link href='style/style_cal.css' rel='stylesheet' />
-
+    <link rel="stylesheet" href="style/style_viaggi.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="map/jquery-jvectormap-2.0.5.css" type="text/css" media="screen" />
+    <script src="map/jquery-jvectormap-2.0.5.min.js"></script>
+    <script src="map/jquery-jvectormap-world-mill.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',
-                themeSystem: 'bootstrap',
-                height: 400,
-                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: ''
-                }
-
-            });
-
-            setTimeout(function() {
-                calendar.render();
-            }, 250)
-
-            $("#mmenu_button").click(function(e) {
-                setTimeout(function() {
-                    calendar.render();
-                }, 250)
-                e.preventDefault();
-            });
-        });
-    </script>
 
 </head>
 
@@ -76,23 +40,24 @@
                     Profile
                 </li>
                 <li class="msidebar-item">
-                    <a href="#dashboard" data-toggle="collapse" class="mactive">
+                    <a href="dashboard.html" data-toggle="collapse" class="mnonactive">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-                        <span class="malign-middle">Dashboard</span>
+                        <span class="">Dashboard</span>
 
                 </li>
 
                 <li class="msidebar-item">
-                    <a id="organizzazione" data-toggle="collapse" class="msidebar-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Organizzazione</span>
-                        <svg id="org_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    <a id="organizzazione" data-toggle="collapse" class="mlinkactive">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <span class="">Organizzazione</span>
+                        <svg id="org_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow mcontracted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
-                    <ul id="org_child" class="mchild mcollapsed">
+                    <ul id="org_child" class="mopen_org mchild">
                         <li class="msidebar-item"><a class="msidebar-link" href="calendar.html">Calendario</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="new_event.html">Aggiungi evento</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="promemoria.html">Promemoria</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.html">Viaggi</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="viaggi.html">Viaggi</a></li>
                     </ul>
                 </li>
 
@@ -145,6 +110,7 @@
     </nav>
 
 
+
     <div id="root" class="mmain_container mis-open_main">
 
         <header class="mintestation">
@@ -157,95 +123,27 @@
 
         <div id="container" class="mcontainer">
 
-            <div class="reload_container">
-                <h3 class="dash_title">Dashboard</h3>
+            <h3 class="title">Viaggi</h3>
 
-                <button id="reload" class="rel_btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reload_icon"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-                </button>
+            <div id="world-map" style="width: 600px; height: 400px"></div>
 
-            </div>
-
-
-            <div class="rapid_container">
-                <div class="double_container">
-                    <div class="finanza">
-
-                        <div style="border: 1px solid transparent; display: inline;">
-
-                            <a style="margin-top: -28px; display: block;" href="crypto.html">
-                                <h4 style="margin: 10px 0 20px 10px; ">Crypto</h4>
-                            </a>
-                            <div class="balance">
-
-
-                                <h3 style="margin: 0 0 0 10px">1939923 PKCT</h3>
-                                <p style="margin: 0 0 0 10px; color: #777777;">Balance</p>
-
-                                <a class="download">Upgrade</a>
-                            </div>
-
-                            <div class="plan">
-                                <div class="content">
-                                    <h3 style="margin: 0px">Free Plan</h3>
-                                    <p style="color: #777777; margin-bottom: 0px;">0.1 GB / 1 GB</p>
-                                    <progress id="file" value="0.12" max="1"> 32% </progress>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="files">
-
-                        <div style="border: 1px solid transparent; display: inline;">
-
-                            <a style="margin-top: -28px; display: block;" href="show_files.html">
-                                <h4 style="margin: 15px 0 20px 10px; ">Last file</h4>
-                            </a>
-                            <div class="balance">
-
-
-                                <h3 style="margin: 20px 0 0 10px">Titolo file</h3>
-                                <p style="margin: 10px 0 0 10px; color: #777777;">Descrizione lunga o corta poco ambia</p>
-
-                            </div>
-
-                            <div class="plan">
-                                <div class="content">
-                                    <a href="" class="download_last">
-                                        <p>Download</p><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    </a>
-
-                                    <a href="" class="view">
-                                        <p>View</p> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_view"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-
-                                    </a>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="calendar_margin">
-                    <div class="calendar_container">
-                        <a href="calendar.html">
-                            <h4>Calendar</h4>
-                        </a>
-                        <div id="calendar"></div>
-                    </div>
-                </div>
-
-            </div>
-            <!--<h2>Sidenav Push Example</h2>
+        </div>
+        <!--<h2>Sidenav Push Example</h2>
             <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
             -->
-        </div>
+    </div>
     </div>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+    <script>
+        $(function() {
+            $('#world-map').vectorMap({
+                map: 'world_mill'
+            });
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -278,7 +176,9 @@
 
 
             $("#organizzazione").click(function(e) {
+                $("#org_child").toggleClass('mcollapsed');
                 $("#org_child").toggleClass('mopen_org');
+
                 if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
@@ -340,6 +240,8 @@
                     });
 
                     $("#org_child").removeClass('mopen_org');
+                    $("#org_child").addClass('mcollapsed');
+
                 }
 
 
@@ -373,13 +275,15 @@
 
                 }
 
-                if ($("#org_child").removeClass('mopen_org')) {
+                if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
                         "transform": "rotate(0deg)"
                     });
 
                     $("#org_child").removeClass('mopen_org');
+                    $("#org_child").addClass('mcollapsed');
+
                 }
 
                 if ($("#finanze_child").hasClass('mopen_fin')) {
@@ -390,8 +294,6 @@
 
                     $("#finanze_child").removeClass('mopen_fin');
                 }
-
-
 
 
                 e.preventDefault();
