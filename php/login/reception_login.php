@@ -4,9 +4,10 @@ require_once 'utils.php';
 
 session_start();
 
-if($_SESSION['scadenza'] > time()){
+
+if(isset($_SESSION['scadenza']) && $_SESSION['scadenza'] > time()){
 	//aggiorno scadenza
-	$_SESSION['scadenza'] = time() + 10;
+	$_SESSION['scadenza'] = time() + 30*60;
 	//redirect alla dashboard
 	echo "sono già loggato mandami alla home";
 	exit();
@@ -21,13 +22,14 @@ else{
 	$email = $_POST['email'] ?? "";
 	$pass = $_POST['pass'] ?? "";
 
-	$user = check_login($email, $pass);
+	$user = check_login_web($email, $pass);
 
 	if($user !== false){
-		echo "corretto";
-		$_SESSION['mail'] = $user['MAIL'];
-		$_SESSION['scadenza'] = time() + 10; 
+		$_SESSION['U_ID'] = $user['U_ID'];
+		$_SESSION['scadenza'] = time() + 30*60; 
 		//redirect alla dashboard
+
+		print_r($_SESSION);
 		exit();
 	}
 	else{
@@ -37,5 +39,4 @@ else{
 	}
 
 }
-
 ?>
