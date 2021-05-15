@@ -42,11 +42,15 @@ body {
 .type {
     font-size: 14px;
     color: rgb(92, 92, 92);
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 h3 {
     margin-top: 5px;
+    overflow: hidden;
     color: #000000;
+    white-space: nowrap;
 }
 
 .description {
@@ -54,7 +58,8 @@ h3 {
     color: #000000;
     height: 100px;
     text-overflow: ellipsis;
-    overflow: scroll;
+    overflow: hidden;
+    width: 100%;
     -ms-overflow-style: none;
     /* IE and Edge */
 }
