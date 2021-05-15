@@ -17,6 +17,11 @@ body {
     float: right;
 }
 
+.error {
+    border: 2px solid red;
+    border-radius: 3px;
+}
+
 .container {
     margin: auto;
     margin-top: auto;

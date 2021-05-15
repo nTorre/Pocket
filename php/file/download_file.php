@@ -18,12 +18,12 @@ if(!valid_session()){
 }
 
 
-if(!isset($_POST['F_ID'])){
+if(!isset($_GET['F_ID'])){
 	//pagina di errore 
 	exit();
 }
 
-$F_ID = $_POST['F_ID'];
+$F_ID = $_GET['F_ID'];
 
 //controllo che il file richiesto appartenga all'utene loggato in sessione
 

@@ -1,0 +1,36 @@
+TRANSAZIONI IN SQL 
+
+Comandi atomici = eseguiti uno dopo l'altro e possono andare a buon fine 
+		  oppure no (possibilità di tornare al punto di partenza).
+
+default AUTO-COMMIT = modifica dati -> subito modificati
+
+BEGIN/START TRANSACTION (comando sql per fare il commit)
+	COMMIT = visibili a tutte le altre sessioni (modifica persiste).
+	ROLLBACK = si ripristina la situazione all'inizio della transazione.
+
+esempio bonifico 
+1) Controllare che il mittente abbia un saldo sufficente per il bonifico.
+2) Tolgo soldi al mittente (update).
+3) Metto i soldi al destinatario (update).
+
+$pdo
+try{
+	$pdo->beginTransaction();
+	if(saldo non sufficente){
+		$pdo->rollback(); return;
+	}
+	tolgo
+	aggiungo
+	$pdo->commit();
+}
+catch(Exception){
+	$pdo->rollback();	
+}
+
+
+
+
+
+
+

@@ -1,0 +1,478 @@
+---VISUALIZZARE I DATI DELLE NAZIONI CON CODICE ESP FRA ITA USA JPN----
+	
+	POSSIAMO USARE L'OPERATORE DI APPARTENENZA INSIEMISTICA ---> IN
+	campo IN(eleno valori separati da virgole)--> true/false
+	campo IN(query annidata) --> true/false
+	
+	select *
+	from country 
+	where Code in ('ESP','FRA','ITA','USA','JPN')
+	
+	select *
+	from country 
+	where Code not in ('ESP','FRA','ITA','USA','JPN')
+	
+	
+	---VISUALIZZA TUTTE LE NAZIONI EUROPEE E ASIATICHE CON POPOLAZIONE---
+	SUPERIORE A 50mln ABITANTI
+	
+	ps. AND ha una priorità maggiore rispetto all' OR
+	
+	select *
+	from country 
+	where (Continent = 'Europe' or Continent = 'Asia') and Population > 50E6;
+	
+	QUERY PIU' COMPATTA
+	where Continent in ('Europe','Asia') and Population > 50E6
+	
+--NAZIONI IL CUI NOME HANNO UNA LUNGHEZZA DI 5 CARATTERI--
+	
+	select *
+	from country 
+	where name like '___';
+	
+
+---FUNZIONI SCALARI -> SI APPLICANO A VALORI COSTANTI O PRESENTI NEL DATABASE---
+	restituiscono un valore
+	
+	
+	
+	
+	select 
+		Continent, 
+		Name,
+		upper(name) as CAPITALIZED_NAME
+		length(name) as LEN_NAME
+		concat(Continent, , Name) as CONTINENT_COUNTRY
+	from country 
+	where name like '___';
+
+
+----------------------FUNZIONI DI GRUPPO---------------------------------------------------
+---COUNT---------
+
+select count(city.Population) 
+from city;
+
+
+select count(*), count(Code), count(IndepYear) 
+from country;
+
+count(*)= conteggio tutti elementi anche se hanno valore =null
+count(colonna)=elementi che nella colonna hanno valore non nullo
+
+
+------SUM---------
+
+select SUM(Population) 
+from country;
+
+
+select SUM(Population) as EUROPE_POPULATION
+from country
+where Continent = "Europe";
+
+SUM(colonna)
+
+
+-----MAX E MIN-----------
+
+ se ci sono valori nulli non li considera
+ 
+select max(LifeExpectancy) as max_LE 
+from country;
+
+
+------AVG----------
+MEDIA
+
+select avg(LifeExpectancy) 
+from country;
+
+
+select SUM(Population) / SUM(SurfaceArea)
+from country
+where Continent = "Europe";
+
+PRENDE I CAPI DI STATO DIVERSI -> PRENDE SOLO UNA VOLTA
+select count(distinct HeadOfState) 
+from country;
+
+-------------------------------------------------------------------------------------------------------------------
+SOTTO QUERY CHE MI DIE QUANTE CITTA CI SONO IN UNA NAZIONE
+select 
+	n.Code,
+	n.Name, 
+	(select count(*) from city as c 
+	where c.CountryCode = n.Code) as num_cities
+from country as n;
+
+NAZIONI CON ALMENO 5 CITTA CON POPOLAZIONE SUOERIORE AL MILIONE
+select 
+	n.Code,
+	n.Name
+from country as n
+where 
+	(select count(*) from city as c
+	where c.CountryCode = n.Code
+	and c.Population>=1E6) >=5;
+	
+	
+CITTA, CON PIU DI 5 MILIONI DI ABITANTI, STAMPO NOME COMPLETO NAZIONE e POPOLAZIONE
+E ORDINATE DALLE PIU GRANDI
+(prima e terza colonna da city / seconda da country)
+
+select 
+	c.Name as city_name,
+	(select n.Name from country as n
+	where n.Code = c.countryCode) as country_name,
+	c.Population 
+from city as c
+where c.Population > 5E6
+order by c.Population desc;
+
+VISSUALIZZARE TUTTE LE CITTA CHE APPARTENGONO A BIG NATIONS (nazioni con almeno 
+100mln di abitanti)
+select 
+	c.*, 
+	(select count(*) from country where population > 100E6) as num_big_nations
+from city as c
+where c.CountryCode in 
+	(select n.Code  from country as n 
+	where n.Population > 100E6);
+ */
+
+
+tipi SQL :
+    
+char(5) → esattamente 5 caratteri, dimensioni fisse
+
+varchar(n) → stringa/testo di al massimo n caratteri
+
+int → numeri interi positivi e negativi
+
+numeric → numeri eventualmente con la virgola
+numeric(6,2) → numeri "decimali"  6 cifre totali, di cui 2 dopo la virgola
+numeric(6) → numeri interi con 6 cifre
+decimal → identico a numeric 
+
+// tipe per i dati temporali
+date → data anno-mese-giorno
+time → ore:minuti:secondi
+time(6)  → ore:minuti:secondi.milionesimi di secondo
+time(3) → ore:minuti:secondi.millessimi (motogp, formula 1)
+time(2) → ore:minuti.secondi.centesimi (ciclismo, sci, eccetere)
+
+
+DATE / TIME / TIMESTAMP
+
+TIMESTAP → anno-mese-giorno ore:minuti:secondi
+
+//differenza fra due date--> restituisce nemeri interi
+timestampdiff(YEAR, partenza, fine)
+
+YEAR
+MONTH
+DAY
+HOUR
+MINUTE
+SECOND
+
+TimeStampDiff(day, data_nascita, CURRENT_DATE) 
+
+CURRENT_TIME
+CURRENT_TIMESTAMP  
+
+
+
+// visualizzare tutte le nazioni che non hanno città associate
+// città il cui codice nazione non esiste nella tabella country
+
+select *
+from city as c 
+where NOT EXISTS(select 1
+from country as c2
+where c.countryCode=c2.Code)
+
+-------------------------------------------------------------------------
+cancellare tutte le città con popolazione inferiore ai 500.000 abitanti 
+
+delete
+from city
+where population <= 500E3
+
+
+UTENTI(uid, username, pwd)
+LOGS(uid, quando, operazione)
+
+cancellare tutti gli utenti che non hanno mai eseguito operazioni (non hanno logs associati)
+
+1. visualizzare i codici uid degli utenti che non compaiono nella tabella dei log:
+    
+select uid
+from utenti as u
+where NOT EXISTS (select 1
+              from logs 
+              where logs.uid = u.uid)
+
+select 1 => non mi interessa quante ce nesiano posso mettere quello che voglio
+
+                       
+select uid
+from utenti
+where (select count(*) from logs 
+           where logs.uid = utenti.uid) = 0
+           
+select uid
+from utenti
+where uid NOT IN (select uid from logs)           
+
+AGGIORNAMENTO 
+UPDATE tabella
+SET colonna1=valore1, colonna2=valore2....
+WHERE condizioni
+
+raddoppiamo la popolazione della francia:
+UPDATE country
+SET population = population * 2
+WHERE code = 'FRA'
+
+aumenta del 50% la popolazione degli stati asiatici,
+e del 20% il prodotto interno lordo
+UPDATE country
+SET population = population * 1.50,
+        GNP = GNP * 1.20
+WHERE continent = 'Asia'
+
+regaliamo le città francesi alla spagna:
+UPDATE city
+SET countryCode = 'SPA' 
+WHERE countryCode = 'FRA'
+
+e adesso, possiamo distruggere la francia:
+DELETE FROM country
+WHERE code = 'FRA'
+
+
+Aumentare di 10.000.000 la popolazione di delle nazioni meno popolate di ogni continente:
+    
+update country
+set Population = Population + 10E6
+from country 
+where (continent, Population) IN
+   (select Continent, min(Population)
+    from country as c
+    group by Continent)
+--------------------------------------------------------------------------
+7 Individuare gli alberghi, da 4 stelle in su, che hanno almeno 50 posti letto in camere con aria_condizionata e bagno privato
+Per ogni albergo visualizzare solo nome e città
+
+
+SELECT nome, città
+FROM alberghi as A
+WHERE n_stars >= 4
+AND      (SELECT SUM(posti_letti)
+              FROM camere as C
+              WHERE C.id_albergo = A.id_albergo
+              AND       C.aria_condizionata = 1
+              AND       C.bagno_privato = 1) >= 50
+              
+              
+Individuare le città che hanno almeno 1000 positi letto nelle struttere ricettive del database 
+
+determino ogni città quanti posti letto ha
+-> determino ogni albergo quanti posti letto ha e creo dei gruppi basati sulla cità
+
+SELECT città
+FROM (
+SELECT 
+   id_albergo, 
+   città,
+   (SELECT sum(posti_letto)
+    FROM camere as c
+    WHERE c.id_albergo = a.id_albergo) as posti_letto_albergo
+FROM alberghi as a)
+GROUP BY città 
+HAVING SUM(posti_letto_albergo) >= 1000
+
+10 BELLUNO 23
+11 BELLUNO 48
+12 BELLUNO 12
+99 CORTINA 50
+101 CORTINA 13
+
+
+Database Mangement System RELAZIONALI
+
+Basati su insiemi di relazioni=tabelle
+
+Vincoli:
+    condizioni che devono essere rispettate da un record, o da un campo di un record, perchè il suo valore sia accettabile in una tabella
+    
+Il DBMS controlla in automatico i vincoli definiti e non consente l'esecuzione di operazioni che violano i voncoli.
+
+Tipi di vincoli:
+INTRA-RELAZIONALI
+    vincoli che rigurardano i valori ammissibili insingole tabelle, senza coinvolgerne altre
+    PRIMARY KEY
+    UNIQUE [KEY]
+    NOT NULL / NULL
+    CHECK (condizioni)
+
+INTERRELAZIONALI
+Si chiamano anche vincoli di integrità referenziali e si basano sulla definizione di CHIAVI ESTERNE
+es Vincoli di integrità referenziale
+
+foreign key (nazione) references nazione(COD_NAZ)
+on delete no action (default)
+	  set null
+	  set default
+	  cascade (cancello anche tutto quello collegato a quello che cancello)
+on update
+
+
+clausola nella tabella interna ma fa riferimento alla tabella esterna
+
+chiave esterna= colonna di una tabella he fa riferimento ad una colonna chiave di un'altra tabella
+		oppure
+		Elenco di colonne che fanno riferimento a più chiavi primarie 
+UNIQUE KEY
+Colonna o insieme di colonne che non ammettono valori duplicati all'interno della tabella
+    
+Esempio:
+    il numero di telefono del centralino dell'ospedale, in una tabelle degli ospedali; è ragionevole supporre che ospedali diversi abbiano centralini diversi, e qundi porre un vincolo di unicità sul numero de telerfono del centralino
+    
+    alberghi:
+Verosimilmente possono esistere molti alberghi con lo stesso nome, ma in città diverse, quindi possiamo porre un vincolo di unicità sulla coppia (città, nome-albergo) ad indicare che non posso avere 2 hotel della stessa città con lo stesso nome
+
+CREATE TABLE ALBERGHI(
+    ID_ALBERGO INT,
+    nome varchar(80) NOT NULL,
+    città varchar(30) NOT NULL,
+    n_stars varchar(3) NULL,
+    telefono varchar(12) NULL,
+    PRIMARY KEY (id_albergo),
+    UNIQUE KEY (telefono),
+    UNIQUE KEY (nome, città)
+);
+    
+
+CREATE TABLE AUTOMEZZI (
+    ID_AUTO int PRIMARY KEY auto_increment,
+    TARGA varchar(10) NOT NULL UNIQUE KEY,
+    N_TELEAIO varchar(20) NOT NULL UNIQUE KEY,
+    MARCA...
+    ANNO_COSTRUZIONE....
+    ....
+)  
+
+
+PREPARED STATEMENT
+
+
+$stmt = $pdo->prepare("
+    select  * 
+    from v_film 
+    where release_year=? 
+    and title=?");
+    
+$stmt->execute([2006,'AFRICAN EGG or title=title']);
+
+-----------------------------------------------------------
+
+DML (Data Manipulation Language)
+istruzioni per manipolare un record -> operazioni CRUD
+
+	QL->query language = sottoinsime di istruzioni specifiche 
+			     per la ricerca.
+es UPDATE, INSERT, DELETE, TRUNCATE (cancella tutte le righe ma lascia le definizioni di una colonna)
+   QL-> SELECT
+
+DDL (Data Definition Language)
+definizione dati=decidiamo la struttura dei dati
+es CREATE, DROP, ALTER(modificare definizione di una tabella),
+
+$pdo->query($sql); //quando devo eseguire una select
+$pdo->exec($sql);  //esecuzione di comandi NON select
+		   //restituisce quanti record ho modificato/aggiornato/modificato
+		     se il comando è di tipo DML
+
+create table lists (
+    customer_id  smallint(5) unsigned,
+    list_name varchar(100) not null,
+    primary key (customer_id, list_name),
+    foreign key (customer_id) references customer_web (customer_id) 
+    on delete cascade on update cascade,
+
+------------------------------------------------------------------------------------------
+-- prepare statement = statement precompilati
+-- di default la libreria emula l'esecuzione del $sql = fa tutto la libreria (no database)
+	questa emulazione converte tutto in una stringa (es non posso fare il limit perche gli serve un numero)*sotto
+
+obiettivi prepare statement con emulazione
+OBIETTIVO 1 = se una query la chiamo più volte la gestisco io
+OBIETTIVO 2 = evitare iniezioni SQL
+
+
+$sql = "select *
+	from v_animals
+	where nazione = :nazione
+	and nome like :nome";
+
+
+$stmt = $pdo->prepare($sql)   	  //COMPILAZIONE (PREPARAZIONE)
+
+$stmt->execute([
+	'nome'=>"%gattopardo%",   //ESECUZIONE
+	'nazione'=>"congo"
+	])
+
+foreach($stmt as $record){
+	//elaborazioni sul record attuale
+}
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------
+GESTIONE ECCEZIONI DI UNA CONNESSIONE E OPZIONI COMUNI (possiamo copia-incollarle)
+
+$host = '127.0.0.1';
+$db   = 'test';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+
+//PROPRIETA
+$options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,         //se c'è un errore nel comando pdo lancia un eccezione (non serve più controllare il false)
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,    //dammi solo l'associativo      
+    PDO::ATTR_EMULATE_PREPARES   => false,	*	 //non faccio compilare alla libreria ma al database
+];
+try {
+     $pdo = new PDO($dsn, $user, $pass, $options);       //se c'è un problema della connessione non vogliamo che il client veda i dati con cui ho provato a connettermi
+} catch (\PDOException $e) {
+     throw new \PDOException($e->getMessage(), (int)$e->getCode());
+}
+
+
+UNION 
+Prende solo una volta ogni elemento.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

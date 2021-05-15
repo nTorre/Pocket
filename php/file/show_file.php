@@ -18,12 +18,12 @@ if(!valid_session()){
 }
 
 
-if(!isset($_POST['F_ID'])){
+if(!isset($_GET['F_ID'])){
 	//pagina di errore 
 	exit();
 }
 
-$F_ID = $_POST['F_ID'];
+$F_ID = $_GET['F_ID'];
 
 if(!file_user($F_ID, $_SESSION['U_ID'])){
 	//ERRORE REDIRECT LOGIN
@@ -34,6 +34,7 @@ if(!file_user($F_ID, $_SESSION['U_ID'])){
 
 $sql =
 "select 
+	f.NAME,
 	f.CONTENT,
 	f.CONTENT_TYPE 
 from files f 
@@ -50,5 +51,7 @@ if($file === false){
 	exit;
 }
 
+
+//header("Content-Disposition: attachment; filename = $file[NAME]");
 header("Content-type: $file[CONTENT_TYPE]");
 echo $file['CONTENT'];

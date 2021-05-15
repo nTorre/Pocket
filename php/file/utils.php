@@ -6,6 +6,9 @@ require_once '../utils/crypto.php';
 
 //controllo che il file richiesto appartenga all'utene loggato in sessione
 function file_user ($F_ID, $U_ID){
+
+	global $pdo;
+
 	$sql =
 	"select 
 		f.U_ID 

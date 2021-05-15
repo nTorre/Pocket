@@ -1,0 +1,16 @@
+INVIO MAIL DA PHP 
+
+funzione mail() 
+invia mail ma nel nostro computer deve esserci installato un server di posta
+file con allegati molto elaborioso
+
+libreria php mailer ( da importare nel progetto)
+
+https://getcomposer.org/
+STANDARD PER GESTIONE DI LIBRERIE ESTERNE --> download installation
+
+https://github.com/PHPMailer/PHPMailer
+INSTALLO LA LIBRERIA 
+
+composer require phpmailer/phpmailer
+quando eseguo questo comando dice che il mio progetto usa le librerie esterne

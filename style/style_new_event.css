@@ -43,6 +43,11 @@ body {
     padding-top: 20px;
 }
 
+.error {
+    border: 2px solid red; 
+    border-radius: 3px;
+}
+
 .input {
     padding: 5px 10px 5px 10px;
     width: 100%;

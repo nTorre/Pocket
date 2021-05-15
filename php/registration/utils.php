@@ -23,8 +23,7 @@ function insert_user($email, $firstname, $lastname, $pass){
 
 /* REQUISITI PASSWORD :
 		- minimo 8 caratteri massimo 20
-		- minimo una lettera maiuscola 
-		- NO SPAZI
+		- minimo una lettera maiuscola
 */
 function check_pass($password){
 
@@ -38,12 +37,6 @@ function check_pass($password){
 		return false;
 	}
 
-	/*
-	//test spazio
-	if(strpos($password, " ") !== null){
-		return false;
-	}
-	*/
 	return true;
 }
 
@@ -62,12 +55,13 @@ function check_email($email){
 
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([$email]);
-
 	$user = $stmt->fetch();
 
 	if ($user === false){
+		//mail disponibile
 		return false;
 	}
+	//mail già registrata
 	return true;
 }
 
