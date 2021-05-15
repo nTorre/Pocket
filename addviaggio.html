@@ -7,16 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style/style_menu2.css">
-    <link rel="stylesheet" href="style/style_show_files.css">
-
-
-
-
-
-
-
+    <link rel="stylesheet" href="style/style_viaggi.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
+    <link rel="stylesheet" href="map/jquery-jvectormap-2.0.5.css" type="text/css" media="screen" />
+    <script src="map/jquery-jvectormap-2.0.5.min.js"></script>
+    <script src="map/jquery-jvectormap-world-mill.js"></script>
+
+    <link rel="stylesheet" href="style/style_add_viaggio.css">
 
 </head>
 
@@ -64,16 +63,17 @@
                 </li>
 
                 <li class="msidebar-item">
-                    <a id="organizzazione" data-toggle="collapse" class="msidebar-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Organizzazione</span>
-                        <svg id="org_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    <a id="organizzazione" data-toggle="collapse" class="mlinkactive">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <span class="">Organizzazione</span>
+                        <svg id="org_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow mcontracted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
-                    <ul id="org_child" class="mchild mcollapsed">
+                    <ul id="org_child" class="mopen_org mchild">
                         <li class="msidebar-item"><a class="msidebar-link" href="calendar.html">Calendario</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="new_event.html">Aggiungi evento</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="promemoria.html">Promemoria</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.html">Viaggi</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="viaggi.html">Viaggi</a></li>
                     </ul>
                 </li>
 
@@ -105,8 +105,8 @@
                         <svg id="files_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
-                    <ul id="files_child" class="mchild mopen_files" data-parent="#sidebar">
-                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="show_files.html">My Files</a></li>
+                    <ul id="files_child" class="mchild mcollapsed" data-parent="#sidebar">
+                        <li class="msidebar-item"><a class="msidebar-link" href="show_files.html">My Files</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="upload_files.html">Upload</a></li>
 
                     </ul>
@@ -119,9 +119,12 @@
 
                 </li>
 
+
+
             </ul>
         </div>
     </nav>
+
 
 
     <div id="root" class="mmain_container mis-open_main">
@@ -136,110 +139,46 @@
 
         <div id="container" class="mcontainer">
 
-            <div class="row">
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
+            <h3 class="title">Viaggi</h3>
+
+
+
+
+            <div class="input">
+                <div class="input_container">
+                    <p class="input_title">Nazione:</p>
+                    <select id="state" name="cars" id="cars">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                      </select>
+
+                    <div class="halfes_container">
+
+                        <div class="half_container left">
+                            <p class="input_title">Da:</p>
+                            <input class="input" type="datetime-local" name="data_ini">
                         </div>
-                    </a>
-                </div>
 
-
-                <div class="card">
-                    <a href="asdsadsad" class="card_link">
-                        <div class="content">
-                            <h3>Title 1asdasdsadass.1</h3>
-                            <p class="type">Typeasdsds: image</p>
-                            <p class="description">Descrizione dell'iasdsadasdsaasasdsadsmmagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
+                        <div class="half_container right">
+                            <p class="input_title">A:</p>
+                            <input class="input" type="datetime-local" name="data_fin">
                         </div>
-                    </a>
-                </div>
 
-
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
+                        <div class="full_container">
+                            <p class="input_title">Descrizione</p>
+                            <textarea class="input textarea" name="descrizione" id="descrizione" placeholder="Descrizione" rows="5"></textarea>
                         </div>
-                    </a>
-                </div>
 
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
-                        </div>
-                    </a>
-                </div>
+                        <button type="submit" class="btn_send">Invia</button>
 
+                    </div>
+                </div>
+                <div class="border_map">
+                    <div id="world-map"></div>
+                </div>
             </div>
-
-
-            <div class="row">
-
-
-
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
-                        </div>
-                    </a>
-                </div>
-
-
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="card">
-                    <a href="" class="card_link">
-                        <div class="content">
-                            <h3>Title 1.1</h3>
-                            <p class="type">Type: image</p>
-                            <p class="description">Descrizione dell'immagine, questa è una prova lunga, vediamo come viene </p>
-                            <a href="" class="download">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            </a>
-                        </div>
-                    </a>
-                </div>
-
-            </div>
-
         </div>
         <!--<h2>Sidenav Push Example</h2>
             <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
@@ -248,7 +187,59 @@
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    -->
+    <script>
+        $(function() {
+            var gdpData = {
+                "AF": 255,
+                "AL": 255,
+                "DZ": 255,
+
+            };
+            $('#world-map').vectorMap({
+                map: 'world_mill',
+                regionStyle: {
+
+                    initial: {
+                        fill: '#c4c4c4',
+                        "fill-opacity": 1,
+                        stroke: 'none',
+                        "stroke-width": 10,
+                        "stroke-opacity": 1
+                    },
+                    hover: {
+                        "fill-opacity": 0.8,
+                        cursor: 'pointer'
+                    },
+                    selected: {
+                        fill: '#3f80ea'
+                    },
+                    selectedHover: {},
+
+                },
+                backgroundColor: '#ffffff',
+                selectedRegions: [
+
+                ],
+
+                onRegionClick(e, code) {
+                    $('#state').val("saab");
+
+                }
+
+
+            });
+        });
+
+
+
+        $("#mmenu_button").click(function(e) {
+            setTimeout(function() {}, 300)
+
+            e.preventDefault();
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -274,6 +265,8 @@
             $("#mmenu_button").click(function(e) {
                 $("#sidebar").toggleClass('mis-open_menu');
                 $("#root").toggleClass('mis-open_main');
+
+
                 e.preventDefault();
             });
 
@@ -281,7 +274,9 @@
 
 
             $("#organizzazione").click(function(e) {
+                $("#org_child").toggleClass('mcollapsed');
                 $("#org_child").toggleClass('mopen_org');
+
                 if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
@@ -338,11 +333,14 @@
 
                 if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
+
                         "transition": "0.3s ease-in-out",
                         "transform": "rotate(0deg)"
                     });
 
                     $("#org_child").removeClass('mopen_org');
+                    $("#org_child").addClass('mcollapsed');
+
                 }
 
 
@@ -353,7 +351,6 @@
                     });
 
                     $("#files_child").removeClass('mopen_files');
-                    $("#files_child").addClass('mcollapsed');
                 }
 
 
@@ -363,8 +360,6 @@
 
             $("#files").click(function(e) {
                 $("#files_child").toggleClass('mopen_files');
-                $("#files_child").toggleClass('mcollapsed');
-
                 if ($("#files_child").hasClass('mopen_files')) {
                     $("#files_arrow").css({
                         "transition": "0.3s ease-in-out",
@@ -379,13 +374,15 @@
 
                 }
 
-                if ($("#org_child").removeClass('mopen_org')) {
+                if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
                         "transform": "rotate(0deg)"
                     });
 
                     $("#org_child").removeClass('mopen_org');
+                    $("#org_child").addClass('mcollapsed');
+
                 }
 
                 if ($("#finanze_child").hasClass('mopen_fin')) {
@@ -396,8 +393,6 @@
 
                     $("#finanze_child").removeClass('mopen_fin');
                 }
-
-
 
 
                 e.preventDefault();

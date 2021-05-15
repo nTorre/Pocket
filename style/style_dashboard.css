@@ -76,6 +76,14 @@ body {
     display: table;
 }
 
+.border_map {
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 0 0.875rem 0 rgb(41 48 66 / 5%);
+    background: #ffffff;
+}
+
 .finanza {
     height: 210px;
     margin: 0px;
@@ -226,5 +234,8 @@ progress {
     }
     .calendar_margin {
         margin: 0px;
+    }
+    .border_map {
+        margin-left: 0px;
     }
 }
