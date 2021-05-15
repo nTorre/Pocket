@@ -51,6 +51,27 @@ h3 {
     overflow: hidden;
     color: #000000;
     white-space: nowrap;
+    display: inline;
+}
+
+.trash {
+    text-decoration: none;
+    color: #979797;
+    position: relative;
+    display: inline;
+    float: right;
+    margin-right: 15px;
+    margin-top: 3px;
+    transition: 0.3s;
+}
+
+.trash svg {
+    width: 30px;
+    height: 30px;
+}
+
+.trash:hover {
+    transform: scale(1.2, 1.2);
 }
 
 .description {
