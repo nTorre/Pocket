@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style/style_menu2.css">
+    <link rel="stylesheet" href="style/style_viaggi.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
@@ -14,7 +15,7 @@
     <script src="map/jquery-jvectormap-2.0.5.min.js"></script>
     <script src="map/jquery-jvectormap-world-mill.js"></script>
 
-    <link rel="stylesheet" href="style/style_viaggi.css">
+    <link rel="stylesheet" href="style/style_add_viaggio.css">
 
 </head>
 
@@ -127,29 +128,42 @@
 
             <h3 class="title">Viaggi</h3>
 
-            <div class="add-event_container">
-                <h3 class="dash_title">Aggiungi viaggio</h3>
-
-                <a id="reload" href="addviaggio.html" class="rel_btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reload_icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>                    </button>
-                </a>
-            </div>
 
 
 
-            <div class="border_map">
-                <div id="world-map" style="width: 100%; height: 400px"></div>
-            </div>
+            <div class="input">
+                <div class="input_container">
+                    <p class="input_title">Nazione:</p>
+                    <select id="state" name="cars" id="cars">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                      </select>
 
-            <div class="continer_viaggi">
-                <div class="viaggio">
-                    <div class="infos">
-                        <h3>Titolo</h3>
+                    <div class="halfes_container">
 
-                        <p>Descrizione lunga o corta non importa, l'importante è mangiare una torta</p>
-                        <p>Da: 19/05/2021 A: 21/05/2021</p>
+                        <div class="half_container left">
+                            <p class="input_title">Da:</p>
+                            <input class="input" type="datetime-local" name="data_ini">
+                        </div>
+
+                        <div class="half_container right">
+                            <p class="input_title">A:</p>
+                            <input class="input" type="datetime-local" name="data_fin">
+                        </div>
+
+                        <div class="full_container">
+                            <p class="input_title">Descrizione</p>
+                            <textarea class="input textarea" name="descrizione" id="descrizione" placeholder="Descrizione" rows="5"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn_send">Invia</button>
+
                     </div>
-                    <div id="world-map2" class="map_single"></div>
+                </div>
+                <div class="border_map">
+                    <div id="world-map"></div>
                 </div>
             </div>
         </div>
@@ -157,62 +171,13 @@
             <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
             -->
     </div>
+    </div>
 
 
     <!--<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     -->
     <script>
-        function createMap2() {
-            var gdpData = {
-                "AF": 255,
-                "AL": 255,
-                "DZ": 255,
-
-            };
-            $('#world-map2').vectorMap({
-                map: 'world_mill',
-                regionStyle: {
-
-                    initial: {
-                        fill: '#c4c4c4',
-                        "fill-opacity": 1,
-                        stroke: 'none',
-                        "stroke-width": 10,
-                        "stroke-opacity": 1
-                    },
-                    hover: {
-                        "fill-opacity": 0.8,
-                        cursor: 'pointer'
-                    },
-                    selected: {
-                        fill: '#3f80ea'
-                    },
-                    selectedHover: {},
-
-                },
-                backgroundColor: '#ffffff',
-                selectedRegions: [
-                    "BR"
-                ],
-
-                onRegionClick(e, code) {
-                    window.location.href = "showviaggio.html?id_naz=" + code;
-
-                },
-
-                focusOn: "BR",
-                zoomMin: 6,
-                zoomMax: 6,
-                panOnDrag: false,
-                zoomOnScroll: false,
-
-            });
-        }
         $(function() {
-            createMap2();
-        });
-
-        function createMap() {
             var gdpData = {
                 "AF": 255,
                 "AL": 255,
@@ -242,31 +207,22 @@
                 },
                 backgroundColor: '#ffffff',
                 selectedRegions: [
-                    "AF"
+
                 ],
 
-
-
                 onRegionClick(e, code) {
-                    window.location.href = "showviaggio.html?id_naz=" + code;
+                    $('#state').val("saab");
 
                 }
 
+
             });
-        }
-        $(function() {
-            createMap();
         });
 
 
 
         $("#mmenu_button").click(function(e) {
-            setTimeout(function() {
-                $('#world-map').html("");
-
-                createMap();
-
-            }, 300)
+            setTimeout(function() {}, 300)
 
             e.preventDefault();
         });

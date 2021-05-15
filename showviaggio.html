@@ -125,21 +125,13 @@
 
         <div id="container" class="mcontainer">
 
-            <h3 class="title">Viaggi</h3>
-
-            <div class="add-event_container">
-                <h3 class="dash_title">Aggiungi viaggio</h3>
-
-                <a id="reload" href="addviaggio.html" class="rel_btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reload_icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>                    </button>
-                </a>
-            </div>
+            <h3 class="title">Viaggi in Brasile</h3>
 
 
 
-            <div class="border_map">
-                <div id="world-map" style="width: 100%; height: 400px"></div>
-            </div>
+
+
+
 
             <div class="continer_viaggi">
                 <div class="viaggio">
@@ -196,7 +188,7 @@
                 ],
 
                 onRegionClick(e, code) {
-                    window.location.href = "showviaggio.html?id_naz=" + code;
+                    window.location.href = "addviaggio.html?id_naz=" + code;
 
                 },
 
@@ -210,65 +202,6 @@
         }
         $(function() {
             createMap2();
-        });
-
-        function createMap() {
-            var gdpData = {
-                "AF": 255,
-                "AL": 255,
-                "DZ": 255,
-
-            };
-            $('#world-map').vectorMap({
-                map: 'world_mill',
-                regionStyle: {
-
-                    initial: {
-                        fill: '#c4c4c4',
-                        "fill-opacity": 1,
-                        stroke: 'none',
-                        "stroke-width": 10,
-                        "stroke-opacity": 1
-                    },
-                    hover: {
-                        "fill-opacity": 0.8,
-                        cursor: 'pointer'
-                    },
-                    selected: {
-                        fill: '#3f80ea'
-                    },
-                    selectedHover: {},
-
-                },
-                backgroundColor: '#ffffff',
-                selectedRegions: [
-                    "AF"
-                ],
-
-
-
-                onRegionClick(e, code) {
-                    window.location.href = "showviaggio.html?id_naz=" + code;
-
-                }
-
-            });
-        }
-        $(function() {
-            createMap();
-        });
-
-
-
-        $("#mmenu_button").click(function(e) {
-            setTimeout(function() {
-                $('#world-map').html("");
-
-                createMap();
-
-            }, 300)
-
-            e.preventDefault();
         });
     </script>
 
