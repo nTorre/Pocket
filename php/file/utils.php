@@ -37,24 +37,36 @@ function check_space($U_ID, $spazio_preview){
 
 	//accesso al database wallets e prendo il balance
 
-	//$balance = get_balance(get_address($U_ID)) ?? 0;
-	$balance = 0;
+	$address = get_address($U_ID);
+
+	if($address !== null){
+		$result = get_balance($address);
+
+		if($result->status = 1){
+			$balance = $result->result;
+		}else{
+			$balance = 0;
+		}
+	}else{
+		$balance = 0 ;
+	}
 
 	if($balance < 1000){
-		($spazio_preview > 1* 1000000000) ? false : true;
+		return ($spazio_preview > 1 * 1000000000) ? false : true;
 	}else 
 	if($balance < 10000){
-		($spazio_preview > 5 * 1000000000) ? false : true;
+		return ($spazio_preview > 5 * 1000000000) ? false : true;
 	}else
 	if($balance < 100000){
-		($spazio_preview > 60 * 1000000000) ? false : true;
+		return ($spazio_preview > 60 * 1000000000) ? false : true;
 	}else{
-		($spazio_preview > 800 * 1000000000) ? false : true;
+		return ($spazio_preview > 800 * 1000000000) ? false : true;
 	}
 
 	return -1;
 
 }
+
 
 
 function get_used_space($U_ID){
