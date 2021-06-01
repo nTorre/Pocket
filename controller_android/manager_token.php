@@ -85,6 +85,9 @@ function check_token($token){
 
 	$conferma = $stmt->fetch();
 
+	if ($conferma !== false) {
+		return $conferma['U_ID'];
+	}
 	return $conferma;
 }
 
@@ -149,4 +152,5 @@ function update_token($U_ID){
 function generate_token(){
 	return trim(strtr(base64_encode(random_bytes(20)), '/+', '_-'), '=');
 }
+
 ?>
