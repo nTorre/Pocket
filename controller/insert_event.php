@@ -1,45 +1,57 @@
-<?php 
-
-
+<?php  
+/*
+INSERIMENTO EVENTI IN DATABASE
+parametri da POST
+U__ID da SESSION
+*/
 require_once 'utils/database.php';
-require_once 'utils/crypto.php';
 require_once 'utils/check_session.php';
 
+session_start();
 
-require_once 'file/utils.php';
-
-require_once 'event/event_utils.php';
-
-require_once 'viaggi/utils_viaggi.php';
-
-
-
-$_SESSION['U_ID'] = 1;
-$_SESSION['scadenza'] = time() + 48927398;
-
-if(!valid_session()){
-	//redirect al login
+if(!check_session()){
+	header('Location: reception_login.php');
 	exit();
 }
 
-$balance = get_balance(get_address($_SESSION['U_ID']));
-$plane = get_plane($_SESSION['U_ID']);
+$errore_titolo = "";
+$errore_insert = "";
+$errore_data = "";
 
-$used_space = get_used_space($_SESSION['U_ID']) / 1000000000;
-$max_usable = get_max_usable($_SESSION['U_ID']);
+if(isset($_POST['btn_send'])){
 
-$used_rel = $used_space / $max_usable;
-$perc_used = $used_rel * 100;
+	if ($_POST['titolo'] !== "") {
 
-$file = get_last_insert_file($_SESSION['U_ID']);
+		//MANCA IL CONTROLLO SULLA DTA CON L'EVENTUALE ERRORE
+		$data_ini = $_POST['data_ini'] ?? null;
+		$data_fin = $_POST['data_fin'] ?? null;
+		$descrizione = $_POST['descrizione'] ?? null;
 
-$eventi = get_events($_SESSION['U_ID']); 
+		if($data_ini > $data_fin){
+			$errore_data = "error";
+		}else{
+			$sql = "			
+				insert into EVENTI (U_ID, TITOLO, DATA_INI, DATA_FIN, DESCRIZIONE)
+				values (?, ?, ?, ?, ?)
+	    		";
 
-$visited_countries = get_visited_countries($_SESSION['U_ID']);
-
-
-
+			$stmt=$pdo->prepare($sql);
+			$stmt->execute([$_SESSION['U_ID'], $_POST['titolo'], $_POST['data_ini'] , $_POST['data_fin'], $descrizione]);
+			$conferma = $stmt->fetch();
+			
+			if ($conferma === null) {
+				$errore_insert = true;
+			}else{
+                header('Location: get_events.php');
+                exit();
+            }
+		}
+	}else{
+		$errore_titolo = "error";
+	}
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,72 +60,10 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pocket | Insert event</title>
     <link rel="stylesheet" href="../style/style_menu2.css">
-    <link rel="stylesheet" href="../style/style_dashboard.css">
-
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
-
-
-    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
-
-
-    <link href='../calendar/main.css' rel='stylesheet' />
-    <script src='../calendar/main.js'></script>
-
-    <link href='../style/style_cal.css' rel='stylesheet' />
-
-    <link rel="stylesheet" href="../map/jquery-jvectormap-2.0.5.css" type="text/css" media="screen" />
-    <script src="../map/jquery-jvectormap-2.0.5.min.js"></script>
-    <script src="../map/jquery-jvectormap-world-mill.js"></script>
+    <link rel="stylesheet" href="../style/style_new_event.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',
-                themeSystem: 'bootstrap',
-                height: 400,
-                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: ''
-                },
-
-            	events: [
-
-            	<?php
-            		foreach ($eventi as $key => $evento) {
-
-            			if($key !== 0){
-            				echo ",";
-            			}
-
-            			echo "{title: '$evento[TITOLO]',
-            				  start: '$evento[DATA_INI]',
-            				  end: '$evento[DATA_FIN]'}";
-            		}
-            	?>
-				]
-
-            });
-
-            setTimeout(function() {
-                calendar.render();
-            }, 250)
-
-            $("#mmenu_button").click(function(e) {
-                setTimeout(function() {
-                    calendar.render();
-                }, 250)
-                e.preventDefault();
-            });
-        });
-    </script>
-
 </head>
 
 <body>
@@ -153,23 +103,24 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
                     Profile
                 </li>
                 <li class="msidebar-item">
-                    <a href="#dashboard" data-toggle="collapse" class="mactive">
+                    <a href="dashboard.php" data-toggle="collapse" class="mnonactive">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
                         <span class="">Dashboard</span>
 
                 </li>
 
                 <li class="msidebar-item">
-                    <a id="organizzazione" data-toggle="collapse" class="msidebar-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Organizzazione</span>
-                        <svg id="org_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    <a id="organizzazione" data-toggle="collapse" class="mlinkactive">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <span class="">Organizzazione</span>
+                        <svg id="org_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow mcontracted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
-                    <ul id="org_child" class="mchild mcollapsed">
-                        <li class="msidebar-item"><a class="msidebar-link" href="calendar.html">Calendario</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="new_event.html">Aggiungi evento</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="promemoria.html">Promemoria</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.html">Viaggi</a></li>
+                    <ul id="org_child" class="mopen_org mchild">
+                        <li class="msidebar-item"><a class="msidebar-link" href="get_events.php">Calendario</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="insert_event.php">Aggiungi evento</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Promemoria</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.php">Viaggi</a></li>
                     </ul>
                 </li>
 
@@ -180,9 +131,9 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                     </a>
                     <ul id="finanze_child" class="mchild mcollapsed">
-                        <li class="msidebar-item"><a class="msidebar-link" href="crypto.html">Crypto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-default.html">Conto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-analytics.html">Carte</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="crypto_pages.php">Crypto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Conto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Carte</a></li>
                     </ul>
                 </li>
 
@@ -195,21 +146,21 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
                     Files
                 </li>
                 <li class="msidebar-item">
-                    <a id="files" href="#dashboards" class="msidebar-link">
+                    <a id="files" href="dashboard.php" class="msidebar-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
                         <i class="" data-feather="sliders"></i> <span class="align-middle">Files</span>
                         <svg id="files_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
                     <ul id="files_child" class="mchild mcollapsed" data-parent="#sidebar">
-                        <li class="msidebar-item"><a class="msidebar-link" href="show_files.html">My Files</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="upload_files.html">Upload</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="get_files.php">My Files</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_file.php">Upload</a></li>
 
                     </ul>
                 </li>
 
                 <li class="msidebar-item">
-                    <a href="#dashboards" data-toggle="collapse" class="msidebar-link">
+                    <a href="crypto_pages.php" data-toggle="collapse" class="msidebar-link">
                         <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle mr-2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Upgrade</span>
                     </a>
 
@@ -220,6 +171,7 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
             </ul>
         </div>
     </nav>
+
 
 
     <div id="root" class="mmain_container mis-open_main">
@@ -234,189 +186,51 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
         <div id="container" class="mcontainer">
 
-            <div class="reload_container">
-                <h3 class="dash_title">Dashboard</h3>
+            <h3 class="title">New event</h3>
 
-                <button id="reload" class="rel_btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reload_icon"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
-                </button>
-
-            </div>
-				 <div class="rapid_container">
-
-
-            	    <div class="double_container">
-
-            	    	<div class="finanza">
-
-                        <div style="border: 1px solid transparent; display: inline;">
-
-                            <a style="margin-top: -28px; display: block;" href="crypto.html">
-                                <h4 style="margin: 10px 0 20px 10px; ">Crypto</h4>
-                            </a>
-                            <div class="balance">
-
-
-                                <h3 style="margin: 0 0 0 10px"><?php if($balance->status == 1) echo "$balance->result"; else echo "0";?></h3>
-                                <p style="margin: 0 0 0 10px; color: #777777;">Balance</p>
-
-                                <a class="download">Upgrade</a>
-                            </div>
-
-                            <div class="plan">
-                                <div class="content">
-                                    <h3 style="margin: 0px"><?=$plane?></h3>
-                                    <p style="color: #777777; margin-bottom: 0px;"><?php echo "$used_space GB / $max_usable GB "?></p>
-                                    <progress id="file" value="<?=$used_rel?>" max="1"><?=$perc_used?></progress>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="files">
-
-                        <div style="border: 1px solid transparent; display: inline;">
-
-                            <a style="margin-top: -28px; display: block;" href="show_files.html">
-                                <h4 style="margin: 15px 0 20px 10px; ">Last file</h4>
-                            </a>
-                            <div class="balance">
-
-
-                                <h3 style="margin: 20px 0 0 10px"><?=$file['TITOLO']?></h3>
-                                <p style="margin: 10px 0 0 10px; color: #777777;"><?=$file['DESCRIZIONE']?></p>
-
-                            </div>
-
-                            <div class="plan">
-                                <div class="content">
-                                    <a href="file/download_file.php?F_ID=<?=$file['F_ID']?>" class="download_last">
-                                        <p>Download</p><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    </a>
-
-                                    <a href="show_file.php?F_ID=<?=$file['F_ID']?>" class="view">
-                                        <p>View</p> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_view"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-
-                                    </a>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
+            <form class="input_container" action="" method="POST">
+                <div class="full_container">
+                    <p class="input_title">Titolo</p>
+                    <input name="titolo" class="input <?=$errore_titolo?>" placeholder="Titolo">
+               		<?php if($errore_titolo == 'error') echo '<p style="color: RED;margin-left: 0px; font-size: 12px">Inserisci il titolo</p>'?>
                 </div>
 
 
-                <div class="calendar_margin">
-                    <div class="calendar_container">
-                        <a href="../../calendar.html">
-                            <h4>Calendar</h4>
-                        </a>
-                        <div id="calendar"></div>
+                <div class="halfes_container">
+
+                    <div class="half_container left">
+                        <p class="input_title">Da:</p>
+                        <input class="input" type="datetime-local" name="data_ini">
                     </div>
+
+                    <div class="half_container right">
+                        <p class="input_title">A:</p>
+                        <input class="input" type="datetime-local" name="data_fin">
+                    </div>
+
                 </div>
 
+                <div class="full_container">
+                    <p class="input_title">Descrizione</p>
+                    <textarea class="input textarea" name="descrizione" id="descrizione" placeholder="Descrizione" rows="5"></textarea>
+                </div>
 
-            </div>
+                <button name="btn_send" type="submit" class="btn_send">Invia</button>
+            </form>
 
-            <div class="border_map">
-                <div id="world-map" style="width: 100%; height: 400px"></div>
-            </div>
-            <!--<h2>Sidenav Push Example</h2>
+
+        </div>
+        <!--<h2>Sidenav Push Example</h2>
             <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
             -->
-        </div>
+    </div>
     </div>
 
 
-
-
-
-
-
-
-
-
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
     <script>
         $(document).ready(function() {
-
-            function createMap() {
-                var gdpData = {
-                    "AF": 255,
-                    "AL": 255,
-                    "DZ": 255,
-
-                };
-                $('#world-map').vectorMap({
-                    map: 'world_mill',
-                    regionStyle: {
-
-                        initial: {
-                            fill: '#c4c4c4',
-                            "fill-opacity": 1,
-                            stroke: 'none',
-                            "stroke-width": 10,
-                            "stroke-opacity": 1
-                        },
-                        hover: {
-                            "fill-opacity": 0.8,
-                            cursor: 'pointer'
-                        },
-                        selected: {
-                            fill: '#3f80ea'
-                        },
-                        selectedHover: {},
-
-                    },
-                    backgroundColor: '#ffffff',
-                    selectedRegions: [
-
-                    	<?php  
-                    	foreach ($visited_countries as $key => $country) {
-                    		
-                    		if($key !== 0){
-            					echo ",";
-            				}
-            				echo "\"";
-            				print_r($country['N_ID']);
-            				echo "\"";
-
-            			}
-                    	
-
-                    	?>
-                    		
-                    ],
-
-
-
-                    onRegionClick(e, code) {
-                        window.location.href = "showviaggio.html?id_naz=" + code;
-
-                    }
-
-                });
-            }
-            
-            createMap();
-           
-
-
-            $("#mmenu_button").click(function(e) {
-                setTimeout(function() {
-                    $('#world-map').html("");
-
-                    createMap();
-
-                }, 300)
-
-                e.preventDefault();
-            });
-
 
             /*$(".menu_icon").click(function(e) {
                 $("#mySidenav").toggleClass('is-open_menu');
@@ -446,7 +260,9 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
 
             $("#organizzazione").click(function(e) {
+                $("#org_child").toggleClass('mcollapsed');
                 $("#org_child").toggleClass('mopen_org');
+
                 if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
@@ -508,6 +324,8 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
                     });
 
                     $("#org_child").removeClass('mopen_org');
+                    $("#org_child").addClass('mcollapsed');
+
                 }
 
 
@@ -541,13 +359,15 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                 }
 
-                if ($("#org_child").removeClass('mopen_org')) {
+                if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
                         "transform": "rotate(0deg)"
                     });
 
                     $("#org_child").removeClass('mopen_org');
+                    $("#org_child").addClass('mcollapsed');
+
                 }
 
                 if ($("#finanze_child").hasClass('mopen_fin')) {
@@ -560,8 +380,6 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
                 }
 
 
-
-
                 e.preventDefault();
             });
 
@@ -571,8 +389,10 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
         });
     </script>
 
+
+    <?php if($errore_insert === true) echo '<script type="text/javascript">alert("ERRORE NELL INSERIMENTO DEL VIAGGIO")</script>';?>
+
+
 </body>
 
 </html>
-
-

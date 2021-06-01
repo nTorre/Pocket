@@ -1,5 +1,5 @@
 <?php  
-require_once '../utils/database.php';
+require_once 'database.php';
 
 function insert_user($email, $firstname, $lastname, $pass){
 	global $pdo;
@@ -23,8 +23,7 @@ function insert_user($email, $firstname, $lastname, $pass){
 
 /* REQUISITI PASSWORD :
 		- minimo 8 caratteri massimo 20
-		- minimo una lettera maiuscola 
-		- NO SPAZI
+		- minimo una lettera maiuscola
 */
 function check_pass($password){
 
@@ -38,12 +37,6 @@ function check_pass($password){
 		return false;
 	}
 
-	/*
-	//test spazio
-	if(strpos($password, " ") !== null){
-		return false;
-	}
-	*/
 	return true;
 }
 
@@ -62,54 +55,16 @@ function check_email($email){
 
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([$email]);
-
 	$user = $stmt->fetch();
 
 	if ($user === false){
+		//mail disponibile
 		return false;
 	}
+	//mail già registrata
 	return true;
 }
 
-//------------UTILS------------
-/*
-
-function check_syntax_email($email){
-	// elimino spazi, "a capo" e altro alle estremità della stringa
-	$email = trim($email);
-
-	echo $email;
-
-
-	// se la stringa è vuota sicuramente non è una mail
-	if(!$email) {
-		return "1111";
-		//return false;
-	}
-
-	// controllo che ci sia una sola @ nella stringa
-	$num_at = count(explode( '@', $email )) - 1;
-	if($num_at != 1) {
-		return ("2222");
-		//return false;
-	}
-
-	// controllo la presenza di ulteriori caratteri "pericolosi":
-	if(strpos($email,';') || strpos($email,',') || strpos($email,' ')) {
-		return "3333";
-		//return false;
-	}
-
-	// la stringa rispetta il formato classico di una mail?
-	if(!preg_match( '/^[\w\.\-]+@\w+[\w\.\-]*?\.\w{1,4}$/', $email)) {
-		return "4444";
-		//return false;
-	}
-
-	return true;
-}
-
-*/
 
 
 

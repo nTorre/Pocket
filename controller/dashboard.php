@@ -1,24 +1,19 @@
 <?php 
 
-
 require_once 'utils/database.php';
 require_once 'utils/crypto.php';
 require_once 'utils/check_session.php';
 
+require_once 'utils/file_utils.php';
+require_once 'utils/event_utils.php';
+require_once 'utils/viaggi_utils.php';
 
-require_once 'file/utils.php';
+session_start();
 
-require_once 'event/event_utils.php';
+error_reporting(E_ERROR | E_PARSE);
 
-require_once 'viaggi/utils_viaggi.php';
-
-
-
-$_SESSION['U_ID'] = 1;
-$_SESSION['scadenza'] = time() + 48927398;
-
-if(!valid_session()){
-	//redirect al login
+if(!check_session()){
+    header('Location: reception_login.php');
 	exit();
 }
 
@@ -26,6 +21,9 @@ $balance = get_balance(get_address($_SESSION['U_ID']));
 $plane = get_plane($_SESSION['U_ID']);
 
 $used_space = get_used_space($_SESSION['U_ID']) / 1000000000;
+
+$appr_space = approximate_space($used_space);
+
 $max_usable = get_max_usable($_SESSION['U_ID']);
 
 $used_rel = $used_space / $max_usable;
@@ -48,7 +46,7 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pocket</title>
     <link rel="stylesheet" href="../style/style_menu2.css">
     <link rel="stylesheet" href="../style/style_dashboard.css">
 
@@ -166,10 +164,10 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                     </a>
                     <ul id="org_child" class="mchild mcollapsed">
-                        <li class="msidebar-item"><a class="msidebar-link" href="calendar.html">Calendario</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="new_event.html">Aggiungi evento</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="promemoria.html">Promemoria</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.html">Viaggi</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="get_events.php">Calendario</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_event.php">Aggiungi evento</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Promemoria</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.php">Viaggi</a></li>
                     </ul>
                 </li>
 
@@ -180,9 +178,9 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                     </a>
                     <ul id="finanze_child" class="mchild mcollapsed">
-                        <li class="msidebar-item"><a class="msidebar-link" href="crypto.html">Crypto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-default.html">Conto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-analytics.html">Carte</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="crypto_pages.php">Crypto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Conto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Carte</a></li>
                     </ul>
                 </li>
 
@@ -202,14 +200,14 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                     </a>
                     <ul id="files_child" class="mchild mcollapsed" data-parent="#sidebar">
-                        <li class="msidebar-item"><a class="msidebar-link" href="show_files.html">My Files</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="upload_files.html">Upload</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="get_files.php">My Files</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_file.php">Upload</a></li>
 
                     </ul>
                 </li>
 
                 <li class="msidebar-item">
-                    <a href="#dashboards" data-toggle="collapse" class="msidebar-link">
+                    <a  href="crypto_pages.php" data-toggle="collapse" class="msidebar-link">
                         <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle mr-2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Upgrade</span>
                     </a>
 
@@ -234,14 +232,14 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
         <div id="container" class="mcontainer">
 
-            <div class="reload_container">
+            <form class="reload_container" action="crypto_pages.php">
                 <h3 class="dash_title">Dashboard</h3>
 
                 <button id="reload" class="rel_btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reload_icon"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
                 </button>
 
-            </div>
+            </form>
 				 <div class="rapid_container">
 
 
@@ -251,7 +249,7 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                         <div style="border: 1px solid transparent; display: inline;">
 
-                            <a style="margin-top: -28px; display: block;" href="crypto.html">
+                            <a style="margin-top: -28px; display: block;" href="crypto_pages.php">
                                 <h4 style="margin: 10px 0 20px 10px; ">Crypto</h4>
                             </a>
                             <div class="balance">
@@ -260,13 +258,13 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
                                 <h3 style="margin: 0 0 0 10px"><?php if($balance->status == 1) echo "$balance->result"; else echo "0";?></h3>
                                 <p style="margin: 0 0 0 10px; color: #777777;">Balance</p>
 
-                                <a class="download">Upgrade</a>
+                                <a href="crypto_pages.php" class="download">Upgrade</a>
                             </div>
 
                             <div class="plan">
                                 <div class="content">
                                     <h3 style="margin: 0px"><?=$plane?></h3>
-                                    <p style="color: #777777; margin-bottom: 0px;"><?php echo "$used_space GB / $max_usable GB "?></p>
+                                    <p style="color: #777777; margin-bottom: 0px;"><?php echo "$appr_space / $max_usable GB "?></p>
                                     <progress id="file" value="<?=$used_rel?>" max="1"><?=$perc_used?></progress>
                                 </div>
                             </div>
@@ -278,7 +276,7 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                         <div style="border: 1px solid transparent; display: inline;">
 
-                            <a style="margin-top: -28px; display: block;" href="show_files.html">
+                            <a style="margin-top: -28px; display: block;" href="get_files.php">
                                 <h4 style="margin: 15px 0 20px 10px; ">Last file</h4>
                             </a>
                             <div class="balance">
@@ -291,7 +289,7 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                             <div class="plan">
                                 <div class="content">
-                                    <a href="file/download_file.php?F_ID=<?=$file['F_ID']?>" class="download_last">
+                                    <a href="download_file.php?F_ID=<?=$file['F_ID']?>" class="download_last">
                                         <p>Download</p><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                                     </a>
 
@@ -312,7 +310,7 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                 <div class="calendar_margin">
                     <div class="calendar_container">
-                        <a href="../../calendar.html">
+                        <a href="get_events.php">
                             <h4>Calendar</h4>
                         </a>
                         <div id="calendar"></div>
@@ -342,7 +340,6 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
 
     <script>
-        $(document).ready(function() {
 
             function createMap() {
                 var gdpData = {
@@ -395,7 +392,7 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
 
                     onRegionClick(e, code) {
-                        window.location.href = "showviaggio.html?id_naz=" + code;
+                        window.location.href = "viaggio.php?N_ID=" + code;
 
                     }
 
@@ -416,7 +413,9 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                 e.preventDefault();
             });
-
+</script>
+<script>
+        $(document).ready(function() {
 
             /*$(".menu_icon").click(function(e) {
                 $("#mySidenav").toggleClass('is-open_menu');
@@ -439,6 +438,8 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
             $("#mmenu_button").click(function(e) {
                 $("#sidebar").toggleClass('mis-open_menu');
                 $("#root").toggleClass('mis-open_main');
+
+
                 e.preventDefault();
             });
 
@@ -446,7 +447,9 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
 
             $("#organizzazione").click(function(e) {
+                $("#org_child").toggleClass('mcollapsed');
                 $("#org_child").toggleClass('mopen_org');
+
                 if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
@@ -503,11 +506,14 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                 if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
+
                         "transition": "0.3s ease-in-out",
                         "transform": "rotate(0deg)"
                     });
 
                     $("#org_child").removeClass('mopen_org');
+                    $("#org_child").addClass('mcollapsed');
+
                 }
 
 
@@ -541,13 +547,15 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
                 }
 
-                if ($("#org_child").removeClass('mopen_org')) {
+                if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
                         "transform": "rotate(0deg)"
                     });
 
                     $("#org_child").removeClass('mopen_org');
+                    $("#org_child").addClass('mcollapsed');
+
                 }
 
                 if ($("#finanze_child").hasClass('mopen_fin')) {
@@ -560,8 +568,6 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
                 }
 
 
-
-
                 e.preventDefault();
             });
 
@@ -570,9 +576,5 @@ $visited_countries = get_visited_countries($_SESSION['U_ID']);
 
         });
     </script>
-
 </body>
-
 </html>
-
-

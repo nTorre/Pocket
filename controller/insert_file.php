@@ -1,25 +1,21 @@
 <?php  
+require_once 'utils/database.php';
+require_once 'utils/crypto.php';
+require_once 'utils/check_session.php';
+require_once 'utils/file_utils.php';
 
-require_once '../utils/database.php';
-require_once '../utils/crypto.php';
-require_once '../utils/check_session.php';
 
-require_once 'utils.php';
-
+error_reporting(E_ERROR | E_PARSE);
 
 session_start();
-
-
-$_SESSION['U_ID'] = 1;
-$_SESSION['scadenza'] = time() + 48927398;
 
 $need_upgrade = false;
 $error_update = false;
 $errore_titolo = "";
 
-if(!valid_session()){
-	//redirect al login
-	exit();
+if(!check_session()){
+    header('Location: reception_login.php');
+    exit();
 }
 
 if(isset($_POST['btn_send'])){
@@ -55,7 +51,9 @@ if(isset($_POST['btn_send'])){
 			        if ($conferma == null) {
 						$error_update = true;
 			        	exit();
-			        }
+			        }else{
+                        header('Location: get_files.php');
+                    }
 		    	}else{
 		    		$need_upgrade = true;
 		    	}
@@ -67,11 +65,6 @@ if(isset($_POST['btn_send'])){
 	}
 }
 
-
-
-
-echo "$errore_titolo";
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,9 +73,9 @@ echo "$errore_titolo";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../../style/style_menu2.css">
-    <link rel="stylesheet" href="../../style/style_new_event.css">
+    <title>Pocket | Insert file</title>
+    <link rel="stylesheet" href="../style/style_menu2.css">
+    <link rel="stylesheet" href="../style/style_new_event.css">
  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -104,9 +97,9 @@ echo "$errore_titolo";
                     Profile
                 </li>
                 <li class="msidebar-item">
-                    <a href="dashboard.html" data-toggle="collapse" class="mactive">
+                    <a href="dashboard.php" data-toggle="collapse" class="mactive">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-                        <span class="malign-middle">Dashboard</span>
+                        <span class="">Dashboard</span>
                 </li>
                 <li class="msidebar-item">
                     <a id="organizzazione" data-toggle="collapse" class="msidebar-link">
@@ -114,10 +107,10 @@ echo "$errore_titolo";
                         <svg id="org_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </a>
                     <ul id="org_child" class="mchild mcollapsed">
-                        <li class="msidebar-item"><a class="msidebar-link" href="calendar.html">Calendario</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-analytics.html">Promemoria</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-saas.html">Viaggi</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-social.html">Eventi</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="get_events.php">Calendario</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_event.php">Aggiungi evento</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Promemoria</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.php">Viaggi</a></li>
                     </ul>
                 </li>
                 <li class="msidebar-item">
@@ -126,9 +119,9 @@ echo "$errore_titolo";
                         <svg id="finanze_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down align-middle mr-2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </a>
                     <ul id="finanze_child" class="mchild mcollapsed">
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-default.html">Conto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-analytics.html">Carte</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-saas.html">Crypto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="crypto_pages.php">Crypto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Conto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Carte</a></li>
                     </ul>
                 </li>
 
@@ -144,12 +137,12 @@ echo "$errore_titolo";
                         <svg id="files_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </a>
                     <ul id="files_child" class="mchild mcollapsed" data-parent="#sidebar">
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-default.html">My Files</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="upload_files.html">Upload</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="get_files.php">My Files</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_file.php">Upload</a></li>
                     </ul>
                 </li>
                 <li class="msidebar-item">
-                    <a href="#dashboards" data-toggle="collapse" class="msidebar-link">
+                    <a href="crypto_pages.php" data-toggle="collapse" class="msidebar-link">
                         <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle mr-2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Upgrade</span>
                     </a>
                 </li>
@@ -166,7 +159,7 @@ echo "$errore_titolo";
         </header>
         <div id="container" class="mcontainer">
 
-            <h3 class="title">New event</h3>
+            <h3 class="title">Insert file</h3>
 
             <form action="insert_file.php" method="POST" enctype="multipart/form-data" class="input_container">
 

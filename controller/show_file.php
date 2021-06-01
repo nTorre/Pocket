@@ -1,19 +1,13 @@
 <?php  
 
-require_once '../utils/database.php';
-require_once '../utils/check_session.php';
-require_once 'utils.php';
+require_once 'utils/database.php';
+require_once 'utils/check_session.php';
+require_once 'utils/file_utils.php';
 
 session_start();
 
-/*
-$_SESSION['U_ID'] = 1;
-$_SESSION['scadenza'] = time() + 48927398;
-$_POST['F_ID'] = 2;
-*/
-
-if(!valid_session()){
-	//redirect al login
+if(!check_session()){
+	header('Location: reception_login.php');
 	exit();
 }
 
@@ -54,3 +48,4 @@ if($file === false){
 //header("Content-Disposition: attachment; filename = $file[NAME]");
 header("Content-type: $file[CONTENT_TYPE]");
 echo $file['CONTENT'];
+

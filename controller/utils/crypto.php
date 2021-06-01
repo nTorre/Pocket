@@ -31,12 +31,16 @@ function get_balance($address){
 
 	$contract = "0xf1fad91c3afb4da2417b7af5fdbaf552c6aa9636";
 	$apikey = "SXWKBK4AHK38HDQRTFP27179EZQ617F8WG";
-	$link = "https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=".$contract."&address=".$address."&tag=latest&apikey=".$apikey;
+	$link = "https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress="
+	        .$contract."&address=".$address."&tag=latest&apikey=".$apikey;
 
-	$bytes = file_get_contents($link);
+	try {
+		$bytes = file_get_contents($link);
+	} catch (Exception $e) {
+		return 0;
+	}
 
 	$obj = json_decode($bytes);
-
 	
 	//stdClass Object ( [status] => 1 [message] => OK [result] => 100000000000000 ) 
 	
@@ -99,5 +103,40 @@ function get_max_usable($U_ID){
 
 }
 
+function approximate_space($bytes){
 
+	$used = "";
+
+	if ($bytes == 0) {
+		$used = "0 MB";
+	}else if($bytes < 0.001){
+		$used = "1 MB";
+	}else{
+		$used = round($bytes, 3) . "GB";
+	}
+
+	return $used;
+}
+
+function check_address($address){
+
+	global $pdo;
+
+	$sql = "
+	select 1
+	from wallets w
+	where w.ADDRESS = ?;
+	";
+
+	$stmt=$pdo->prepare($sql);
+	$stmt->execute([$address]);
+	$risultato = $stmt->fetch();
+
+	if($risultato == null){
+		return true;
+	}
+	return false;
+
+
+}
 ?>
