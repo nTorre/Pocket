@@ -1,5 +1,5 @@
 <?php  
-require_once '../utils/database.php';
+require_once 'database.php';
 
 function check_login_web($email, $pass){
 	global $pdo;

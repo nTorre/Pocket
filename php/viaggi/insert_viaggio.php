@@ -1,3 +1,56 @@
+<?php  
+
+
+require_once '../utils/database.php';
+require_once '../utils/check_session.php';
+
+session_start();
+
+
+$_SESSION['U_ID'] = 1;
+$_SESSION['scadenza'] = time() + 48927398;
+
+$_POST['N_ID'] = 'IT';
+
+$errore_titolo = "";
+$errore_insert = "";
+$errore_data = "";
+
+if(!valid_session()){
+    //redirect al login
+    exit();
+    
+}
+
+if(isset($_POST['btn_send'])){
+
+	if ($_POST['titolo'] !== "") {
+
+		$data_ini = $_POST['data_ini'] ?? null;
+		$data_fin = $_POST['data_fin'] ?? null;
+		$descrizione = $_POST['descrizione'] ?? null;
+
+		if($data_ini > $data_fin){
+			$errore_data = "error";
+		}else{
+			$sql = "
+			insert into viaggi (U_ID, TITOLO, DATA_INI, DATA_FIN, DESCRIZIONE, N_ID)
+			values (?, ?, ?, ?, ?, ?);
+	    	";
+
+			$stmt=$pdo->prepare($sql);
+			$stmt->execute([$_SESSION['U_ID'], $_POST['titolo'], $data_ini , $data_fin, $descrizione, $_POST['N_ID']]);
+			$conferma = $stmt->fetch();
+			
+			if ($conferma === null) {
+				$errore_insert = true;
+			}
+		}
+	}else{
+		$errore_titolo = "error";
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,66 +59,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <link href='style/style_cal.css' rel='stylesheet' />
-
-    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
-
-
-    <link href='calendar/main.css' rel='stylesheet' />
-    <script src='calendar/main.js'></script>
-
+    <link rel="stylesheet" href="../../style/style_menu2.css">
+    <link rel="stylesheet" href="../../style/style_viaggi.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style/style_menu2.css">
-    <link href='style/style_cal_page.css' rel='stylesheet' />
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
+    <link rel="stylesheet" href="../../map/jquery-jvectormap-2.0.5.css" type="text/css" media="screen" />
+    <script src="../../map/jquery-jvectormap-2.0.5.min.js"></script>
+    <script src="../../map/jquery-jvectormap-world-mill.js"></script>
 
+    <link rel="stylesheet" href="../../style/style_add_viaggio.css">
 
-
-    <!--<link href="style/style_cal.css" rel="stylesheet">-->
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                initialView: 'dayGridMonth',
-                initialDate: '2021-07-07',
-                themeSystem: 'bootstrap',
-                height: 660,
-                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-
-                //ljhdasfbcwtvnegirugfocmdigu
-                events: [{
-                    title: 'Long Event',
-                    start: '2021-07-07',
-                    end: '2021-07-10'
-                }, {
-                    groupId: '999',
-                    title: 'Repeating Event',
-                    start: '2021-07-09T16:00:00'
-                }]
-
-            });
-
-            setTimeout(function() {
-                calendar.render();
-            }, 250)
-
-            $("#mmenu_button").click(function(e) {
-                setTimeout(function() {
-                    calendar.render();
-                }, 250)
-                e.preventDefault();
-            });
-        });
-    </script>
 </head>
 
 <body>
@@ -119,10 +123,10 @@
 
                     </a>
                     <ul id="org_child" class="mopen_org mchild">
-                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="calendar.html">Calendario</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="calendar.html">Calendario</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="new_event.html">Aggiungi evento</a></li>
                         <li class="msidebar-item"><a class="msidebar-link" href="promemoria.html">Promemoria</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.html">Viaggi</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="viaggi.html">Viaggi</a></li>
                     </ul>
                 </li>
 
@@ -175,6 +179,7 @@
     </nav>
 
 
+
     <div id="root" class="mmain_container mis-open_main">
 
         <header class="mintestation">
@@ -185,37 +190,117 @@
             </a>
         </header>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <div id="container" class="mcontainer">
 
-            <div class="add-event_container">
-                <h3 class="dash_title">Add event</h3>
+            <h3 class="title">Viaggi</h3>
 
-                <a id="reload" href="new_event.html" class="rel_btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reload_icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>                    </button>
-                </a>
+            <div class="input">
+
+
+                <form action="" method="POST" class="input_container">
+
+
+                    <p class="input_title">Nazione:</p>
+                    <select id="state" name="cars" id="cars">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+
+                    <div class="halfes_container">
+
+                    	<div class="full_container">
+                            <p class="input_title">Titolo</p>
+                            <input class="input <?=$errore_titolo?>" name="titolo" id="descrizione" placeholder="Titolo" rows="5"></textarea>
+               				<?php if($errore_titolo == 'error') echo '<p style="color: RED;margin-left: 0px; font-size: 12px">Inserisci il titolo</p>'?>
+                        </div>
+
+                        <div class="half_container left">
+                            <p class="input_title">Da:</p>
+                            <input class="input <?=$errore_data?>" type="datetime-local" name="data_ini">
+                        </div>
+
+                        <div class="half_container right">
+                            <p class="input_title">A:</p>
+                            <input class="input <?=$errore_data?>" type="datetime-local" name="data_fin">
+                        </div>
+
+                        <div class="full_container">
+                            <p class="input_title">Descrizione</p>
+                            <textarea class="input textarea" name="descrizione" id="descrizione" placeholder="Descrizione" rows="5"></textarea>
+                        </div>
+
+                        <button name="btn_send" type="submit" class="btn_send">Invia</button>
+
+                    </div>
+                </form>
+
+                <div class="border_map">
+                    <div id="world-map"></div>
+                </div>
             </div>
-            <div id='calendar'></div>
-
         </div>
+        <!--<h2>Sidenav Push Example</h2>
+            <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+            -->
+    </div>
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    -->
+    <script>
+        $(function() {
+            var gdpData = {
+                "AF": 255,
+                "AL": 255,
+                "DZ": 255,
+
+            };
+            $('#world-map').vectorMap({
+                map: 'world_mill',
+                regionStyle: {
+
+                    initial: {
+                        fill: '#c4c4c4',
+                        "fill-opacity": 1,
+                        stroke: 'none',
+                        "stroke-width": 10,
+                        "stroke-opacity": 1
+                    },
+                    hover: {
+                        "fill-opacity": 0.8,
+                        cursor: 'pointer'
+                    },
+                    selected: {
+                        fill: '#3f80ea'
+                    },
+                    selectedHover: {},
+
+                },
+                backgroundColor: '#ffffff',
+                selectedRegions: [
+
+                ],
+
+                onRegionClick(e, code) {
+                    $('#state').val("saab");
+
+                }
+
+
+            });
+        });
+
+
+
+        $("#mmenu_button").click(function(e) {
+            setTimeout(function() {}, 300)
+
+            e.preventDefault();
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -241,6 +326,8 @@
             $("#mmenu_button").click(function(e) {
                 $("#sidebar").toggleClass('mis-open_menu');
                 $("#root").toggleClass('mis-open_main');
+
+
                 e.preventDefault();
             });
 
@@ -307,6 +394,7 @@
 
                 if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
+
                         "transition": "0.3s ease-in-out",
                         "transform": "rotate(0deg)"
                     });
@@ -330,7 +418,6 @@
 
                 e.preventDefault();
             });
-
 
             $("#files").click(function(e) {
                 $("#files_child").toggleClass('mopen_files');
@@ -378,6 +465,14 @@
         });
     </script>
 
+    <?php if($errore_insert === true) echo '<script type="text/javascript">alert("ERRORE NELL INSERIMENTO DEL VIAGGIO")</script>';?>
+
 </body>
 
 </html>
+
+
+
+
+
+

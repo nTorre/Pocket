@@ -34,8 +34,8 @@ $RESULT = $stmt->fetchAll();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style/style_menu2.css">
-    <link rel="stylesheet" href="style/style_show_files.css">
+    <link rel="stylesheet" href="../../style/style_menu2.css">
+    <link rel="stylesheet" href="../../style/style_show_files.css">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 
@@ -157,9 +157,16 @@ foreach ($RESULT as $file) {
 		        <h3><?= $file['TITOLO']?></h3>
 		        <p class="type"><?= $content_type[0] ?></p>
 		        <p class="description"><?= $file['DESCRIZIONE']?></p>
-		        <a href="download_file.php?F_ID=<?=$file['F_ID']?>" class="download">
-		        	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-		        </a>
+
+		        <div>
+                    <a href="download_file.php?F_ID=<?=$file['F_ID']?>" class="download">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </a>
+
+                    <a href="delete_file.php?F_ID=<?=$file['F_ID']?>"class="trash">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                    </a>
+                </div>
 	        </div>
         </a>
     </div>
@@ -169,9 +176,6 @@ foreach ($RESULT as $file) {
 	<?php $pos_file = -1;}
 }?>
 </div>
-
-</div>
-
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 

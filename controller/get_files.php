@@ -1,3 +1,27 @@
+<?php  
+
+require_once 'utils/database.php';
+require_once 'utils/check_session.php';
+
+session_start();
+
+if(!check_session()){
+    header('Location: reception_login.php');
+    exit();
+}
+
+//query
+$sql = "
+	select *
+	from files f
+	where U_ID = ?;
+    ";
+
+$stmt=$pdo->prepare($sql);
+$stmt->execute([$_SESSION['U_ID']]);
+$RESULT = $stmt->fetchAll();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,67 +29,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <link href='style/style_cal.css' rel='stylesheet' />
-
-    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
-
-
-    <link href='calendar/main.css' rel='stylesheet' />
-    <script src='calendar/main.js'></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style/style_menu2.css">
-    <link href='style/style_cal_page.css' rel='stylesheet' />
-
-
-
-
-    <!--<link href="style/style_cal.css" rel="stylesheet">-->
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                initialView: 'dayGridMonth',
-                initialDate: '2021-07-07',
-                themeSystem: 'bootstrap',
-                height: 660,
-                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-
-                //ljhdasfbcwtvnegirugfocmdigu
-                events: [{
-                    title: 'Long Event',
-                    start: '2021-07-07',
-                    end: '2021-07-10'
-                }, {
-                    groupId: '999',
-                    title: 'Repeating Event',
-                    start: '2021-07-09T16:00:00'
-                }]
-
-            });
-
-            setTimeout(function() {
-                calendar.render();
-            }, 250)
-
-            $("#mmenu_button").click(function(e) {
-                setTimeout(function() {
-                    calendar.render();
-                }, 250)
-                e.preventDefault();
-            });
-        });
-    </script>
+    <title>Pocket | Files</title>
+    <link rel="stylesheet" href="../style/style_menu2.css">
+    <link rel="stylesheet" href="../style/style_show_files.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -75,27 +42,14 @@
         <div class="mscroll_wrapper">
 
             <a class="msidebar-brand" href="index.html">
-                <svg class="msvgprova" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-                    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" id="svg925" viewBox="0 0 80 80" sodipodi:docname="logo_bianco_sfondo_azzurro_bordo_bianco.jpg.svg" inkscape:version="1.0.2 (e86c870, 2021-01-15)">
-  
-                    <g
-                        inkscape:groupmode="layer"
-                        inkscape:label="Image"
-                        id="g933"
-                        transform="translate(1.8897638,1.8897638)">
-                        <circle
-                        style="fill:#3f80ea;fill-opacity:1;stroke:transparent;stroke-width:3.77953;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke fill markers"
-                        id="path1500"
-                        cx="30"
-                        cy="30"
-                        r="30" />
-                        <path
-                        style="fill:#ffffff;fill-opacity:1;stroke-width:0.360365"
-                        d="m 14.000004,49.13796 c -0.0042,-0.947573 3.141983,-26.461906 3.424656,-27.773092 l 0.175809,-0.815486 H 27.98445 c 7.011299,0 10.383979,0.123566 10.383979,0.380437 0,0.694673 -0.99718,2.324637 -2.028255,3.31533 -1.84346,1.771257 -3.217124,2.103247 -8.70252,2.103247 -4.917309,0 -5.024467,0.01682 -5.192099,0.815487 -0.233711,1.113468 -2.001857,15.527267 -1.996558,16.275796 0.0094,1.335904 3.48886,-0.649022 4.456875,-2.542552 0.280792,-0.549257 0.686685,-2.375671 0.901984,-4.058697 0.2153,-1.683026 0.483275,-3.671661 0.5955,-4.41919 l 0.204042,-1.359144 h 4.581404 c 3.102487,0 5.060444,-0.170967 6.065378,-0.529618 5.639891,-2.012833 7.813718,-9.095436 3.920258,-12.772695 -1.817675,-1.716739 -2.990212,-1.9201 -11.070909,-1.9201 -8.804378,0 -9.649477,-0.211283 -10.762776,-2.690793 -0.364807,-0.812487 -0.666828,-1.852918 -0.671156,-2.312069 L 18.661797,10 29.679636,10.109941 c 12.370785,0.123446 12.722925,0.19033 15.798223,3.00074 6.537667,5.974547 3.558726,18.065294 -5.508429,22.35729 -1.826197,0.864441 -3.011239,1.152693 -5.344189,1.299918 l -2.997666,0.189178 -0.229687,1.672603 c -0.570807,4.156643 -3.504525,8.02706 -7.633143,10.070317 -1.670903,0.826931 -2.563485,1.000048 -5.865844,1.137681 L 14.00382,50 14.00002,49.137958 Z"
-                        id="path1498" />
-                    </g>
-                </svg>
-
+                <svg class="msvgprova" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+              <path d="M19.4,4.1l-9-4C10.1,0,9.9,0,9.6,0.1l-9,4C0.2,4.2,0,4.6,0,5s0.2,0.8,0.6,0.9l9,4C9.7,10,9.9,10,10,10s0.3,0,0.4-0.1l9-4
+                C19.8,5.8,20,5.4,20,5S19.8,4.2,19.4,4.1z"/>
+              <path d="M10,15c-0.1,0-0.3,0-0.4-0.1l-9-4c-0.5-0.2-0.7-0.8-0.5-1.3c0.2-0.5,0.8-0.7,1.3-0.5l8.6,3.8l8.6-3.8c0.5-0.2,1.1,0,1.3,0.5
+                c0.2,0.5,0,1.1-0.5,1.3l-9,4C10.3,15,10.1,15,10,15z"/>
+              <path d="M10,20c-0.1,0-0.3,0-0.4-0.1l-9-4c-0.5-0.2-0.7-0.8-0.5-1.3c0.2-0.5,0.8-0.7,1.3-0.5l8.6,3.8l8.6-3.8c0.5-0.2,1.1,0,1.3,0.5
+                c0.2,0.5,0,1.1-0.5,1.3l-9,4C10.3,20,10.1,20,10,20z"/>
+            </svg>
 
                 <span class="malign-middle">Pocket</span>
             </a>
@@ -105,24 +59,23 @@
                     Profile
                 </li>
                 <li class="msidebar-item">
-                    <a href="dashboard.html" data-toggle="collapse" class="mnonactive">
+                    <a href="dashboard.php" data-toggle="collapse" class="mnonactive">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
                         <span class="">Dashboard</span>
 
                 </li>
 
                 <li class="msidebar-item">
-                    <a id="organizzazione" data-toggle="collapse" class="mlinkactive">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                        <span class="">Organizzazione</span>
-                        <svg id="org_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow mcontracted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    <a id="organizzazione" data-toggle="collapse" class="msidebar-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Organizzazione</span>
+                        <svg id="org_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
-                    <ul id="org_child" class="mopen_org mchild">
-                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="calendar.html">Calendario</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="new_event.html">Aggiungi evento</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="promemoria.html">Promemoria</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.html">Viaggi</a></li>
+                    <ul id="org_child" class="mchild mcollapsed">
+                        <li class="msidebar-item"><a class="msidebar-link" href="get_events.php">Calendario</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_event.php">Aggiungi evento</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Promemoria</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.php">Viaggi</a></li>
                     </ul>
                 </li>
 
@@ -133,9 +86,9 @@
 
                     </a>
                     <ul id="finanze_child" class="mchild mcollapsed">
-                        <li class="msidebar-item"><a class="msidebar-link" href="crypto.html">Crypto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-default.html">Conto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-analytics.html">Carte</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="crypto_pages.php">Crypto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Conto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Carte</a></li>
                     </ul>
                 </li>
 
@@ -148,27 +101,25 @@
                     Files
                 </li>
                 <li class="msidebar-item">
-                    <a id="files" href="#dashboards" class="msidebar-link">
+                    <a id="files" href="" class="msidebar-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-                        <i class="" data-feather="sliders"></i> <span class="align-middle">Files</span>
+                        <i class="malign-middle" data-feather="sliders"></i> <span class="align-middle">Files</span>
                         <svg id="files_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
-                    <ul id="files_child" class="mchild mcollapsed" data-parent="#sidebar">
-                        <li class="msidebar-item"><a class="msidebar-link" href="show_files.html">My Files</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="upload_files.html">Upload</a></li>
+                    <ul id="files_child" class="mchild mopen_files" data-parent="#sidebar">
+                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="">My Files</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_file.php">Upload</a></li>
 
                     </ul>
                 </li>
 
                 <li class="msidebar-item">
-                    <a href="#dashboards" data-toggle="collapse" class="msidebar-link">
+                    <a href="crypto_pages.php" data-toggle="collapse" class="msidebar-link">
                         <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle mr-2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Upgrade</span>
                     </a>
 
                 </li>
-
-
 
             </ul>
         </div>
@@ -184,36 +135,43 @@
                 <span class="mthird_line"></span>
             </a>
         </header>
+<div id="container" class="mcontainer">
 
 
+<?php
+$pos_file = -1;
+foreach ($RESULT as $file) {
 
+	$content_type = explode('/', $file['CONTENT_TYPE']);
+	$pos_file++;
+	if($pos_file === 0){?>
+		<div class="row">
+	<?php } ?>
+	<div class="card">
+        <a href="show_file.php?F_ID=<?=$file['F_ID']?>" class="card_link">
+	        <div class="content">
+		        <h3><?= $file['TITOLO']?></h3>
+		        <p class="type"><?= $content_type[0] ?></p>
+		        <p class="description"><?= $file['DESCRIZIONE']?></p>
 
+		        <div>
+                    <a href="download_file.php?F_ID=<?=$file['F_ID']?>" class="download">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg_download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </a>
 
-
-
-
-
-
-
-
-
-
-
-
-        <div id="container" class="mcontainer">
-
-            <div class="add-event_container">
-                <h3 class="dash_title">Add event</h3>
-
-                <a id="reload" href="new_event.html" class="rel_btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reload_icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>                    </button>
-                </a>
-            </div>
-            <div id='calendar'></div>
-
-        </div>
+                    <a href="delete_file.php?F_ID=<?=$file['F_ID']?>"class="trash">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                    </a>
+                </div>
+	        </div>
+        </a>
     </div>
-
+    <?php
+    if($pos_file === 3){?>
+	</div>
+	<?php $pos_file = -1;}
+}?>
+</div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
@@ -248,9 +206,7 @@
 
 
             $("#organizzazione").click(function(e) {
-                $("#org_child").toggleClass('mcollapsed');
                 $("#org_child").toggleClass('mopen_org');
-
                 if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
@@ -312,8 +268,6 @@
                     });
 
                     $("#org_child").removeClass('mopen_org');
-                    $("#org_child").addClass('mcollapsed');
-
                 }
 
 
@@ -324,6 +278,7 @@
                     });
 
                     $("#files_child").removeClass('mopen_files');
+                    $("#files_child").addClass('mcollapsed');
                 }
 
 
@@ -331,9 +286,10 @@
                 e.preventDefault();
             });
 
-
             $("#files").click(function(e) {
                 $("#files_child").toggleClass('mopen_files');
+                $("#files_child").toggleClass('mcollapsed');
+
                 if ($("#files_child").hasClass('mopen_files')) {
                     $("#files_arrow").css({
                         "transition": "0.3s ease-in-out",
@@ -348,15 +304,13 @@
 
                 }
 
-                if ($("#org_child").hasClass('mopen_org')) {
+                if ($("#org_child").removeClass('mopen_org')) {
                     $("#org_arrow").css({
                         "transition": "0.3s ease-in-out",
                         "transform": "rotate(0deg)"
                     });
 
                     $("#org_child").removeClass('mopen_org');
-                    $("#org_child").addClass('mcollapsed');
-
                 }
 
                 if ($("#finanze_child").hasClass('mopen_fin')) {
@@ -371,13 +325,8 @@
 
                 e.preventDefault();
             });
-
-
-
-
         });
     </script>
-
 </body>
-
 </html>
+

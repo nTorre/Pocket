@@ -45,7 +45,7 @@ if(isset($_POST['btn_send'])){
 			            ";
 			        $stmt=$pdo->prepare($sql);
 
-			        //leggo il contenuto dell'immagine da disco
+			        //leggo il contenuto del file da disco
 			        $bytes = file_get_contents($destination);
 
 			        //eseguiamo il comando pre-compilato coi valori attuali

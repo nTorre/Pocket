@@ -1,32 +1,23 @@
 <?php  
 
-require_once '../utils/database.php';
-require_once '../utils/check_session.php';
+require_once 'utils/database.php';
+require_once 'utils/check_session.php';
 
 session_start();
 
-/*
-$_SESSION['U_ID'] = 1;
-$_SESSION['scadenza'] = time() + 48927398;
-$_POST['F_ID'] = 4;
-*/
-
-
-if(!valid_session()){
-	//redirect al login
+if(!check_session()){
+	header('Location: reception_login.php');
 	exit();
 }
 
-
 if(!isset($_GET['F_ID'])){
-	//pagina di errore 
+	header('Location: reception_login.php');
 	exit();
 }
 
 $F_ID = $_GET['F_ID'];
 
 //controllo che il file richiesto appartenga all'utene loggato in sessione
-
 $sql =
 "select 
 	f.U_ID 
@@ -55,5 +46,5 @@ $stmt->execute([$F_ID]);
 $conferma = $stmt->fetch();
 
 //pagina di conferma e redirect all' anteprima dei file
-echo "CANCELLAZIONE corretta ";
+header('Location: get_files.php');
 exit();

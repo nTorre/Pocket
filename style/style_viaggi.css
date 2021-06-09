@@ -116,6 +116,19 @@ body {
     max-height: 80px;
 }
 
+.download {
+    text-decoration: none;
+    background: #0072f4;
+    height: 30px;
+    width: 100px;
+    display: inline-block;
+    padding: 8px 5px 6px 5px;
+    border-radius: 3px;
+    transition: 0.3s;
+    color: #ffffff;
+    text-align: center;
+}
+
 @media(max-width: 998px) {
     .map_single {
         visibility: hidden;

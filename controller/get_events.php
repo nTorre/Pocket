@@ -1,3 +1,18 @@
+<?php  
+require_once 'utils/database.php';
+require_once 'utils/check_session.php';
+require_once 'utils/event_utils.php';
+
+session_start();
+
+if(!check_session()){
+	header('Location: reception_login.php');
+	exit();
+}
+
+$eventi = get_events($_SESSION['U_ID']); 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,19 +20,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pocket | Calendar</title>
 
-    <link href='style/style_cal.css' rel='stylesheet' />
+    <link rel='stylesheet' href='../style/style_cal.css' />
 
     <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 
 
-    <link href='calendar/main.css' rel='stylesheet' />
-    <script src='calendar/main.js'></script>
+    <link href='../calendar/main.css' rel='stylesheet' />
+    <script src='../calendar/main.js'></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style/style_menu2.css">
-    <link href='style/style_cal_page.css' rel='stylesheet' />
+    <link rel="stylesheet" href="../style/style_menu2.css">
+    <link rel='stylesheet' href='../style/style_cal_page.css' />
 
 
 
@@ -40,17 +55,21 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
+                events: [
 
-                //ljhdasfbcwtvnegirugfocmdigu
-                events: [{
-                    title: 'Long Event',
-                    start: '2021-07-07',
-                    end: '2021-07-10'
-                }, {
-                    groupId: '999',
-                    title: 'Repeating Event',
-                    start: '2021-07-09T16:00:00'
-                }]
+                <?php
+                    foreach ($eventi as $key => $evento) {
+
+                        if($key !== 0){
+                            echo ",";
+                        }
+
+                        echo "{title: '$evento[TITOLO]',
+                              start: '$evento[DATA_INI]',
+                              end: '$evento[DATA_FIN]'}";
+                    }
+                ?>
+                ]
 
             });
 
@@ -105,7 +124,7 @@
                     Profile
                 </li>
                 <li class="msidebar-item">
-                    <a href="dashboard.html" data-toggle="collapse" class="mnonactive">
+                    <a href="dashboard.php" data-toggle="collapse" class="mnonactive">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
                         <span class="">Dashboard</span>
 
@@ -119,10 +138,10 @@
 
                     </a>
                     <ul id="org_child" class="mopen_org mchild">
-                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="calendar.html">Calendario</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="new_event.html">Aggiungi evento</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="promemoria.html">Promemoria</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.html">Viaggi</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="get_events.php">Calendario</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_event.php">Aggiungi evento</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Promemoria</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.php">Viaggi</a></li>
                     </ul>
                 </li>
 
@@ -133,9 +152,9 @@
 
                     </a>
                     <ul id="finanze_child" class="mchild mcollapsed">
-                        <li class="msidebar-item"><a class="msidebar-link" href="crypto.html">Crypto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-default.html">Conto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-analytics.html">Carte</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="crypto_pages.php">Crypto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Conto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Carte</a></li>
                     </ul>
                 </li>
 
@@ -148,21 +167,21 @@
                     Files
                 </li>
                 <li class="msidebar-item">
-                    <a id="files" href="#dashboards" class="msidebar-link">
+                    <a id="files" href="dashboard.php" class="msidebar-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
                         <i class="" data-feather="sliders"></i> <span class="align-middle">Files</span>
                         <svg id="files_arrow" xmlns="http://www.w3.org/2000/svg" class="mextended_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle"><polyline points="6 9 12 15 18 9"></polyline></svg>
 
                     </a>
                     <ul id="files_child" class="mchild mcollapsed" data-parent="#sidebar">
-                        <li class="msidebar-item"><a class="msidebar-link" href="show_files.html">My Files</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="upload_files.html">Upload</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="get_files.php">My Files</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_file.php">Upload</a></li>
 
                     </ul>
                 </li>
 
                 <li class="msidebar-item">
-                    <a href="#dashboards" data-toggle="collapse" class="msidebar-link">
+                    <a href="crypto_pages.php" data-toggle="collapse" class="msidebar-link">
                         <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle mr-2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Upgrade</span>
                     </a>
 
@@ -188,24 +207,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         <div id="container" class="mcontainer">
 
             <div class="add-event_container">
                 <h3 class="dash_title">Add event</h3>
 
-                <a id="reload" href="new_event.html" class="rel_btn">
+                <a id="reload" href="insert_event.php" class="rel_btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reload_icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>                    </button>
                 </a>
             </div>

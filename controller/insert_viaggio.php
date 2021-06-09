@@ -1,3 +1,81 @@
+<?php  
+
+require_once 'utils/database.php';
+require_once 'utils/check_session.php';
+require_once 'utils/viaggi_utils.php';
+
+session_start();
+
+$all_countries = get_countries();
+
+
+$errore_titolo = "";
+$errore_insert = "";
+$errore_data = "";
+
+if(!check_session()){
+    header('Location : reception_login.php');
+    exit();
+    
+}
+
+if(isset($_POST['btn_send'])){
+
+	if ($_POST['titolo'] !== "") {
+
+        echo $_POST['descrizione'];
+
+        if($_POST['data_fin'] === ""){
+            $data_fin = null;
+        }else{
+            $data_fin = $_POST['data_fin'];
+        }
+
+        if($_POST['data_ini'] === ""){
+            $data_ini = null;
+        }else{
+            $data_ini = $_POST['data_ini']; 
+        }
+
+        if ($_POST['descrizione'] === "") {
+            $descrizione = null;
+        }else{
+            $descrizione = $_POST['descrizione'];
+        }
+
+        /*
+
+		$data_ini = $_POST['data_ini'] ?? null;
+		$data_fin = $_POST['data_fin'] ?? null;
+		$descrizione = $_POST['descrizione'] ?? null;
+
+*/
+		if($data_ini > $data_fin){
+			$errore_data = "error";
+		}else{
+          
+			$sql = "
+			insert into viaggi (U_ID, TITOLO, DATA_INI, DATA_FIN, DESCRIZIONE, N_ID)
+			values (?, ?, ?, ?, ?, ?);
+	    	";
+
+			$stmt=$pdo->prepare($sql);
+			$stmt->execute([$_SESSION['U_ID'], $_POST['titolo'], $data_ini , $data_fin, $descrizione, $_POST['N_ID']]);
+			$conferma = $stmt->fetch();
+            
+            
+			if ($conferma === null) {
+				$errore_insert = true;
+			}else{
+                header('Location: viaggi.php');
+            }
+		}
+            
+	}else{
+		$errore_titolo = "error";
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,67 +83,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <link href='style/style_cal.css' rel='stylesheet' />
-
-    <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
-
-
-    <link href='calendar/main.css' rel='stylesheet' />
-    <script src='calendar/main.js'></script>
-
+    <title>Pocket | Insert travel</title>
+    <link rel="stylesheet" href="../style/style_menu2.css">
+    <link rel="stylesheet" href="../style/style_viaggi.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style/style_menu2.css">
-    <link href='style/style_cal_page.css' rel='stylesheet' />
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
+    <link rel="stylesheet" href="../map/jquery-jvectormap-2.0.5.css" type="text/css" media="screen" />
+    <script src="../map/jquery-jvectormap-2.0.5.min.js"></script>
+    <script src="../map/jquery-jvectormap-world-mill.js"></script>
 
+    <link rel="stylesheet" href="../style/style_add_viaggio.css">
 
-
-    <!--<link href="style/style_cal.css" rel="stylesheet">-->
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                initialView: 'dayGridMonth',
-                initialDate: '2021-07-07',
-                themeSystem: 'bootstrap',
-                height: 660,
-                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-
-                //ljhdasfbcwtvnegirugfocmdigu
-                events: [{
-                    title: 'Long Event',
-                    start: '2021-07-07',
-                    end: '2021-07-10'
-                }, {
-                    groupId: '999',
-                    title: 'Repeating Event',
-                    start: '2021-07-09T16:00:00'
-                }]
-
-            });
-
-            setTimeout(function() {
-                calendar.render();
-            }, 250)
-
-            $("#mmenu_button").click(function(e) {
-                setTimeout(function() {
-                    calendar.render();
-                }, 250)
-                e.preventDefault();
-            });
-        });
-    </script>
 </head>
 
 <body>
@@ -105,7 +134,7 @@
                     Profile
                 </li>
                 <li class="msidebar-item">
-                    <a href="dashboard.html" data-toggle="collapse" class="mnonactive">
+                    <a href="dashboard.php" data-toggle="collapse" class="mnonactive">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" class="msidebar-item_icon" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders align-middle"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
                         <span class="">Dashboard</span>
 
@@ -119,10 +148,10 @@
 
                     </a>
                     <ul id="org_child" class="mopen_org mchild">
-                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="calendar.html">Calendario</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="new_event.html">Aggiungi evento</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="promemoria.html">Promemoria</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="viaggi.html">Viaggi</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="get_events.php">Calendario</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_event.php">Aggiungi evento</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Promemoria</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" style="color: rgba(255, 255, 255, 0.9);" href="viaggi.php">Viaggi</a></li>
                     </ul>
                 </li>
 
@@ -133,9 +162,9 @@
 
                     </a>
                     <ul id="finanze_child" class="mchild mcollapsed">
-                        <li class="msidebar-item"><a class="msidebar-link" href="crypto.html">Crypto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-default.html">Conto</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="dashboard-analytics.html">Carte</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="crypto_pages.php">Crypto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Conto</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="comingsoon.php">Carte</a></li>
                     </ul>
                 </li>
 
@@ -155,14 +184,14 @@
 
                     </a>
                     <ul id="files_child" class="mchild mcollapsed" data-parent="#sidebar">
-                        <li class="msidebar-item"><a class="msidebar-link" href="show_files.html">My Files</a></li>
-                        <li class="msidebar-item"><a class="msidebar-link" href="upload_files.html">Upload</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="get_files.php">My Files</a></li>
+                        <li class="msidebar-item"><a class="msidebar-link" href="insert_file.php">Upload</a></li>
 
                     </ul>
                 </li>
 
                 <li class="msidebar-item">
-                    <a href="#dashboards" data-toggle="collapse" class="msidebar-link">
+                    <a href="crypto_pages.php" data-toggle="collapse" class="msidebar-link">
                         <svg xmlns="http://www.w3.org/2000/svg" class="msidebar-item_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-middle mr-2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Upgrade</span>
                     </a>
 
@@ -175,6 +204,7 @@
     </nav>
 
 
+
     <div id="root" class="mmain_container mis-open_main">
 
         <header class="mintestation">
@@ -185,37 +215,122 @@
             </a>
         </header>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <div id="container" class="mcontainer">
 
-            <div class="add-event_container">
-                <h3 class="dash_title">Add event</h3>
+            <h3 class="title">Viaggi</h3>
 
-                <a id="reload" href="new_event.html" class="rel_btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="reload_icon"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>                    </button>
-                </a>
+            <div class="input">
+
+
+                <form action="" method="POST" class="input_container">
+
+
+                    <p class="input_title">Nazione:</p>
+                    <select id="state" name="N_ID" id="states">
+                        <?php 
+                        foreach ($all_countries as $key => $value) {
+                            echo "<option value=$key>$value</option>";
+
+                        }
+                        ?>
+                       
+                    </select>
+
+                    <div class="halfes_container">
+
+                    	<div class="full_container">
+                            <p class="input_title">Titolo</p>
+                            <input class="input <?=$errore_titolo?>" name="titolo" id="descrizione" placeholder="Titolo" rows="5"></textarea>
+               				<?php if($errore_titolo == 'error') echo '<p style="color: RED;margin-left: 0px; font-size: 12px">Inserisci il titolo</p>'?>
+                        </div>
+
+                        <div class="half_container left">
+                            <p class="input_title">Da:</p>
+                            <input class="input <?=$errore_data?>" type="datetime-local" name="data_ini">
+                        </div>
+
+                        <div class="half_container right">
+                            <p class="input_title">A:</p>
+                            <input class="input <?=$errore_data?>" type="datetime-local" name="data_fin">
+                        </div>
+
+                        <div class="full_container">
+                            <p class="input_title">Descrizione</p>
+                            <textarea class="input textarea" name="descrizione" id="descrizione" placeholder="Descrizione" rows="5"></textarea>
+                        </div>
+
+                        <button name="btn_send" type="submit" class="btn_send">Invia</button>
+
+                    </div>
+                </form>
+
+                <div class="border_map">
+                    <div id="world-map"></div>
+                </div>
             </div>
-            <div id='calendar'></div>
-
         </div>
+        <!--<h2>Sidenav Push Example</h2>
+            <p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+            -->
+    </div>
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    -->
+    <script>
+    
+        function createMap(code){
+            $('#world-map').html("");
+
+            $('#world-map').vectorMap({
+                map: 'world_mill',
+                regionStyle: {
+
+                    initial: {
+                        fill: '#c4c4c4',
+                        "fill-opacity": 1,
+                        stroke: 'none',
+                        "stroke-width": 10,
+                        "stroke-opacity": 1
+                    },
+                    hover: {
+                        "fill-opacity": 0.8,
+                        cursor: 'pointer'
+                    },
+                    selected: {
+                        fill: '#3f80ea'
+                    },
+                    selectedHover: {},
+
+                },
+                backgroundColor: '#ffffff',
+                selectedRegions: [
+                    code
+                ],
+
+                onRegionClick(e, code) {
+                    var element = document.getElementById("state");
+                    element.value =  code;
+                    createMap(code);
+
+                }
+
+
+            });
+        }
+        
+        createMap();
+
+
+
+
+        $("#mmenu_button").click(function(e) {
+            setTimeout(function() {}, 300)
+
+            e.preventDefault();
+        });
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -241,6 +356,8 @@
             $("#mmenu_button").click(function(e) {
                 $("#sidebar").toggleClass('mis-open_menu');
                 $("#root").toggleClass('mis-open_main');
+
+
                 e.preventDefault();
             });
 
@@ -307,6 +424,7 @@
 
                 if ($("#org_child").hasClass('mopen_org')) {
                     $("#org_arrow").css({
+
                         "transition": "0.3s ease-in-out",
                         "transform": "rotate(0deg)"
                     });
@@ -330,7 +448,6 @@
 
                 e.preventDefault();
             });
-
 
             $("#files").click(function(e) {
                 $("#files_child").toggleClass('mopen_files');
@@ -378,6 +495,14 @@
         });
     </script>
 
+    <?php if($errore_insert === true) echo '<script type="text/javascript">alert("ERRORE NELL INSERIMENTO DEL VIAGGIO")</script>';?>
+
 </body>
 
 </html>
+
+
+
+
+
+
